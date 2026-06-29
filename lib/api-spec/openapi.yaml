@@ -1,0 +1,406 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: The Awan Academy API – server-side admin operations and dashboard stats
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: admin
+    description: Admin-only server operations requiring service role
+  - name: dashboard
+    description: Dashboard statistics and summaries
+  - name: public
+    description: Public inquiry submission
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /admin/create-user:
+    post:
+      operationId: adminCreateUser
+      tags: [admin]
+      summary: Create a new user account
+      description: Admin-only – creates a Supabase auth user and profile row
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserInput"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreatedUser"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/reset-password:
+    post:
+      operationId: adminResetPassword
+      tags: [admin]
+      summary: Reset a user's password
+      description: Admin-only – sets a new password for an existing user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordInput"
+      responses:
+        "200":
+          description: Password reset successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /dashboard/overview:
+    get:
+      operationId: getDashboardOverview
+      tags: [dashboard]
+      summary: Get admin dashboard overview statistics
+      description: Returns aggregated counts and summaries for the admin dashboard
+      responses:
+        "200":
+          description: Dashboard overview stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardOverview"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /dashboard/attendance-summary:
+    get:
+      operationId: getDashboardAttendanceSummary
+      tags: [dashboard]
+      summary: Get attendance summary for dashboard charts
+      description: Returns attendance breakdown for the last 30 days
+      responses:
+        "200":
+          description: Attendance summary data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AttendanceSummary"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /dashboard/fee-summary:
+    get:
+      operationId: getDashboardFeeSummary
+      tags: [dashboard]
+      summary: Get fee collection summary
+      description: Returns monthly fee collection stats for charts
+      responses:
+        "200":
+          description: Fee summary data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeeSummary"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /public/inquiries:
+    post:
+      operationId: submitAdmissionInquiry
+      tags: [public]
+      summary: Submit an admission inquiry
+      description: Public endpoint – saves inquiry from the admissions page form
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdmissionInquiryInput"
+      responses:
+        "201":
+          description: Inquiry submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /public/contact:
+    post:
+      operationId: submitContactForm
+      tags: [public]
+      summary: Submit a contact form message
+      description: Public endpoint – saves contact form submission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactFormInput"
+      responses:
+        "201":
+          description: Message submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+
+    CreateUserInput:
+      type: object
+      required: [email, password, fullName, role]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        fullName:
+          type: string
+        role:
+          type: string
+          enum: [admin, teacher, parent, student]
+        phone:
+          type: ["string", "null"]
+
+    CreatedUser:
+      type: object
+      required: [userId, email, role]
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+
+    ResetPasswordInput:
+      type: object
+      required: [userId, newPassword]
+      properties:
+        userId:
+          type: string
+        newPassword:
+          type: string
+          minLength: 8
+
+    DashboardOverview:
+      type: object
+      required: [totalStudents, totalTeachers, totalParents, totalClasses, pendingFees, paidFeesThisMonth, newInquiries, todayAttendance]
+      properties:
+        totalStudents:
+          type: integer
+        totalTeachers:
+          type: integer
+        totalParents:
+          type: integer
+        totalClasses:
+          type: integer
+        pendingFees:
+          type: integer
+        paidFeesThisMonth:
+          type: number
+        newInquiries:
+          type: integer
+        todayAttendance:
+          type: integer
+        studentsByClass:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClassCount"
+
+    ClassCount:
+      type: object
+      required: [className, count]
+      properties:
+        className:
+          type: string
+        count:
+          type: integer
+
+    AttendanceSummary:
+      type: object
+      required: [daily]
+      properties:
+        daily:
+          type: array
+          items:
+            $ref: "#/components/schemas/AttendanceDay"
+        totals:
+          $ref: "#/components/schemas/AttendanceTotals"
+
+    AttendanceDay:
+      type: object
+      required: [date, present, absent, late, leave]
+      properties:
+        date:
+          type: string
+        present:
+          type: integer
+        absent:
+          type: integer
+        late:
+          type: integer
+        leave:
+          type: integer
+
+    AttendanceTotals:
+      type: object
+      required: [present, absent, late, leave]
+      properties:
+        present:
+          type: integer
+        absent:
+          type: integer
+        late:
+          type: integer
+        leave:
+          type: integer
+
+    FeeSummary:
+      type: object
+      required: [monthly]
+      properties:
+        monthly:
+          type: array
+          items:
+            $ref: "#/components/schemas/FeeMonth"
+        currentMonthCollection:
+          type: number
+        totalPending:
+          type: number
+
+    FeeMonth:
+      type: object
+      required: [month, collected, pending]
+      properties:
+        month:
+          type: string
+        collected:
+          type: number
+        pending:
+          type: number
+
+    AdmissionInquiryInput:
+      type: object
+      required: [studentName, guardianName, phone, desiredClass]
+      properties:
+        studentName:
+          type: string
+        guardianName:
+          type: string
+        phone:
+          type: string
+        desiredClass:
+          type: string
+        currentSchool:
+          type: ["string", "null"]
+        message:
+          type: ["string", "null"]
+
+    ContactFormInput:
+      type: object
+      required: [name, email, message]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: ["string", "null"]
+        subject:
+          type: ["string", "null"]
+        message:
+          type: string

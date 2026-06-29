@@ -1,0 +1,1251 @@
+Build a complete advanced academy website and management portal for “The Awan Academy” using Next.js, Supabase, Tailwind CSS, shadcn/ui, Framer Motion, and modern UI/UX.
+
+Project Name:
+The Awan Academy
+
+Main goal:
+Create a professional, premium, photo-realistic, animated, modern academy website with a full management system. The website should include public pages, admin dashboard, teacher dashboard, student dashboard, and parent dashboard. The system should be affordable and optimized for Supabase Free Tier because the academy currently has around 130 students and 7 teachers.
+
+Use Next.js App Router as the main framework.
+Use Supabase for database, authentication, storage, and role-based security.
+Do not use Express for the first version. Use Next.js Server Actions and Route Handlers instead.
+Use TypeScript everywhere.
+Use Tailwind CSS, shadcn/ui, Framer Motion, React Hook Form, Zod, TanStack Table, Lucide icons, and Recharts.
+
+Academy details:
+Academy name: The Awan Academy
+Email: [awansacademy@gmail.com](mailto:awansacademy@gmail.com)
+Phone / WhatsApp: +92 333 1962657
+Timings: 4:00 PM to 7:30 PM Pakistan time
+Admission process: WhatsApp or on-campus admission
+Total current students: around 130
+Total current teachers: 7
+Classes: Class 1 to Class 12
+Subjects: All subjects from class 1 to 12
+Levels:
+
+* Primary Level: Classes 1–5
+* Middle Level: Classes 6–8
+* Secondary Level: Classes 9–10
+* Higher Secondary Level: FSC and ICS
+
+Fee structure:
+
+* Class 1–4: PKR 1500
+* Class 5–6: PKR 2000
+* Class 7–8: PKR 2500
+* Class 9–10: PKR 3500
+* FSC: PKR 1500 per subject
+
+Teachers list:
+
+1. Sir Junaid — Maths, Computer, Urdu
+2. Sir Shoaib — Chemistry, Physics
+3. Sir Mudasir — English
+4. Miss Uzra — Biology, English, General Science
+5. Miss Shanzil — Islamiat, Tarjama tul Quran
+6. Miss Hijab — General Maths
+7. Miss Komal — Arts subjects
+
+Brand style:
+Use a premium educational identity with these colors:
+
+* Deep maroon
+* White
+* Cream
+* Gold
+* Dark charcoal
+  The design should feel modern, trustworthy, academic, Pakistani, premium, and clean.
+
+Visual style requirements:
+Create an advanced GUI with:
+
+* Photo-realistic image sections
+* Glassmorphism cards
+* 3D hover cards
+* Premium animated hero section
+* Parallax image sections
+* Smooth scroll animations
+* Animated counters
+* Animated result cards
+* Animated teacher cards
+* Animated course cards
+* Floating WhatsApp button
+* Sticky navbar with blur background
+* Modern mega menu on desktop
+* Mobile drawer navigation
+* Soft shadows and rounded cards
+* Maroon/gold gradients
+* Professional dashboard sidebar
+* Clean table UI
+* Loading skeletons
+* Empty states
+* Toast notifications
+* Responsive mobile-first design
+
+Image usage:
+Use uploaded images in these categories:
+
+* Logo
+* CEO / owner photo
+* Teacher portraits
+* Faculty group photos
+* Boys classroom photos
+* Girls classroom photos
+* Tests/exam photos
+* Urdu/English class photos
+* Student trip photos
+* Bus trip video
+* Farewell party photos
+* Award photos
+* Student group photos
+* Result posters
+* Fee structure poster
+* Admission poster
+
+Optimize all images:
+
+* Convert large images to WebP where possible
+* Use Next.js Image component
+* Use lazy loading
+* Use blur placeholders
+* Do not store heavy public images in Supabase if they can be stored in the public folder
+* Use Supabase Storage only for dynamic uploads from admin panel
+* Do not store videos in Supabase Free Tier; use compressed local video or external video hosting later
+
+Important privacy:
+Many images include students and minors. Public gallery and result images must be controlled by admin. Add an is_public field for gallery and result posts. Do not expose private student records publicly. Parent and student dashboards must be private.
+
+Public website pages:
+
+1. Home page
+   Create a premium landing page.
+   Sections:
+
+* Animated hero with academy logo, academy name, photo-realistic background image, and CTA buttons:
+
+  * Apply for Admission
+  * Contact on WhatsApp
+  * View Fee Structure
+* Stats section:
+
+  * 130+ Students
+  * 7 Expert Teachers
+  * Classes 1–12
+  * 100% Result
+* About preview
+* Courses preview
+* Result highlights
+* Teacher/faculty preview
+* Gallery preview
+* Admission open banner
+* Testimonials/success stories
+* Footer with contact and social links
+
+2. About page
+   Sections:
+
+* Academy introduction
+* Mission
+* Vision
+* Why choose The Awan Academy
+* Learning environment
+* Faculty values
+* CEO/owner profile section
+* Photo-realistic academy image section
+
+3. Courses page
+   Show all academic levels as animated cards:
+
+* Primary Level: Classes 1–5
+* Middle Level: Classes 6–8
+* Secondary Level: Classes 9–10
+* Higher Secondary: FSC and ICS
+  Each card should include:
+* Level name
+* Classes
+* Subjects
+* Monthly fee if applicable
+* CTA: Apply Now
+
+4. Fee Structure page
+   Create a beautiful maroon/gold fee table.
+   Show:
+
+* Class 1–4: PKR 1500
+* Class 5–6: PKR 2000
+* Class 7–8: PKR 2500
+* Class 9–10: PKR 3500
+* FSC: PKR 1500 per subject
+  Also show:
+* Admission process
+* Contact WhatsApp
+* Note: Final fee confirmation should be done through academy office/admin.
+
+5. Results page
+   Create a premium results and achievements page.
+   Sections:
+
+* SSC-II 2025 result
+* 100% result badge
+* Top students cards
+* Result posters gallery
+* Inspiring stories section
+* Admin-editable result records
+* Public result posters should be visible only if admin marks them public
+
+6. Gallery page
+   Create responsive gallery with categories:
+
+* Classroom
+* Tests
+* Trips
+* Farewell
+* Awards
+* Faculty
+* Student Activities
+* Events
+  Features:
+* Masonry/grid layout
+* Lightbox modal
+* Category filters
+* Smooth animations
+* Admin can upload/delete/hide images
+
+7. Teachers page
+   Show 7 teachers with animated cards:
+
+* Sir Junaid — Maths, Computer, Urdu
+* Sir Shoaib — Chemistry, Physics
+* Sir Mudasir — English
+* Miss Uzra — Biology, English, General Science
+* Miss Shanzil — Islamiat, Tarjama tul Quran
+* Miss Hijab — General Maths
+* Miss Komal — Arts subjects
+  Each card should include:
+* Name
+* Subjects
+* Optional photo
+* Short bio placeholder
+* Professional card animation
+
+8. Admissions page
+   Sections:
+
+* Admission open for session 2026–27
+* Admission process: WhatsApp or on-campus
+* Inquiry form with fields:
+
+  * Student name
+  * Parent/guardian name
+  * Phone number
+  * Desired class
+  * Current school
+  * Message
+* Submit inquiry into Supabase
+* Admin can manage inquiries
+* WhatsApp CTA button
+
+9. Contact page
+   Show:
+
+* Email: [awansacademy@gmail.com](mailto:awansacademy@gmail.com)
+* WhatsApp: +92 333 1962657
+* Timings: 4:00 PM to 7:30 PM Pakistan time
+* Social links placeholders:
+
+  * Instagram
+  * TikTok
+  * YouTube
+* Contact form
+* Location placeholder/map section
+
+10. Login page
+    Only login, no public signup.
+    Users cannot create their own account.
+    Only admin can create accounts.
+
+Authentication and roles:
+Use Supabase Auth.
+Roles:
+
+* owner
+* admin
+* teacher
+* parent
+* student
+
+No public signup.
+Only owner/admin can create accounts manually.
+After login:
+
+* owner/admin goes to Admin Dashboard
+* teacher goes to Teacher Dashboard
+* parent goes to Parent Dashboard
+* student goes to Student Dashboard
+
+Important account rules:
+Admin creates all accounts.
+Parent account is linked to one or more students/children.
+Student account is optional but supported.
+Parent dashboard should show fee/payment details, child attendance, child results, notices, and complaints/messages.
+Student dashboard should NOT show detailed fee/payment management. Student can only see basic academic data like profile, attendance summary, timetable, homework, notices, and results if admin allows.
+Teacher cannot see fee/payment records.
+Teacher cannot see private parent information except necessary student contact if admin allows.
+Only admin/owner can see all data.
+
+Admin dashboard:
+Create a full advanced admin panel with sidebar, topbar, profile menu, search, notifications, and responsive layout.
+
+Admin features:
+
+1. Dashboard overview
+
+* Total students
+* Total parents
+* Total teachers
+* Total classes
+* Today attendance
+* Pending fees
+* Paid fees this month
+* New admission inquiries
+* Result summary
+* Charts for fees, attendance, students by class
+
+2. Student management
+
+* Add student
+* Edit student
+* Delete/archive student
+* Search students
+* Filter by class, status, gender, batch
+* Assign class and batch
+* Link student to parent account
+* Add admission number
+* Add father/guardian name
+* Add phone number
+* Add profile image
+* Import/export CSV
+
+3. Parent management
+
+* Add parent account
+* Edit parent account
+* Link one parent to one or multiple students
+* Parent can view only linked children
+* Parent can see fee status, attendance, results, notices, and messages
+* Parent can submit complaint/message to admin
+* Reset parent password
+
+4. Teacher management
+
+* Add teacher
+* Edit teacher
+* Delete/archive teacher
+* Assign subjects and classes
+* Assign batches
+* Reset teacher password
+* Teacher profile photo
+* Teacher status active/inactive
+
+5. Class management
+
+* Add classes 1–12
+* Create Primary, Middle, Secondary, Higher Secondary groups
+* Add monthly fee
+* Assign subjects
+* Assign teacher
+* Assign batch/timing
+
+6. Subject management
+
+* Add subject
+* Assign subject to class
+* Assign subject to teacher
+
+7. Attendance management
+
+* Admin can view all attendance
+* Teachers can mark attendance for assigned classes
+* Filter by date, class, student
+* Attendance statuses:
+
+  * Present
+  * Absent
+  * Late
+  * Leave
+* Monthly attendance report
+
+8. Fee management
+
+* Only admin and parent can see fee details
+* Student should not manage fees
+* Create monthly fee records
+* Mark fee as paid, unpaid, partial
+* Payment method field
+* Month/year field
+* Receipt number
+* Notes
+* Parent can view fee status of linked children
+* Admin can export fee reports
+* Show pending fee alerts
+
+9. Exams and results
+
+* Create exams
+* Add subjects
+* Add total marks
+* Teachers can enter marks for assigned classes
+* Admin can approve/publish results
+* Student can see own result if published
+* Parent can see child result if published
+* Public result page only shows approved public result highlights, not private student records
+
+10. Homework / lessons
+
+* Teacher can add homework for assigned classes
+* Teacher can upload simple attachments if needed
+* Student can view homework
+* Parent can view homework of child
+* Admin can view everything
+
+11. Notices / announcements
+
+* Admin can create notices for:
+
+  * All
+  * Teachers
+  * Parents
+  * Students
+  * Specific class
+* Teacher can create class notices if allowed
+* Parent sees notices related to their child/class
+* Student sees only student/class notices
+
+12. Admission inquiries
+
+* View website inquiries
+* Change status:
+
+  * New
+  * Contacted
+  * Admitted
+  * Rejected
+* Add notes
+* Convert inquiry into student record
+
+13. Gallery management
+
+* Upload images
+* Add category
+* Add title
+* Mark public/private
+* Delete images
+* Hide images
+* Upload result posters
+* Upload event photos
+
+14. Messaging / complaints
+
+* Parent can send message/complaint to admin
+* Admin can reply
+* Teacher can receive admin messages
+* Basic internal messaging system
+
+15. Settings
+
+* Academy profile
+* Logo
+* Contact info
+* Timings
+* Social links
+* Fee structure
+* Homepage stats
+* Theme settings
+* Backup/export section
+
+Teacher dashboard:
+Teacher dashboard should be clean and simple.
+Features:
+
+* View assigned classes
+* View assigned subjects
+* View student list of assigned classes
+* Mark attendance
+* Add homework
+* Add class notices
+* Add exam marks/results
+* View own profile
+* Cannot access fee management
+* Cannot access admin settings
+* Cannot access other teachers’ private data
+
+Student dashboard:
+Student dashboard should be simple.
+Features:
+
+* View profile
+* View class and batch
+* View timetable
+* View attendance summary
+* View homework
+* View notices
+* View published results
+* View teacher names/subjects
+* Student should not see full fee/payment management
+* Student should only see basic academic information
+
+Parent dashboard:
+Parent dashboard is very important.
+Features:
+
+* Parent login
+* View linked child/children
+* Switch between children if more than one
+* View child profile
+* View child attendance
+* View child results
+* View child homework
+* View child class notices
+* View fee/payment status
+* View pending fee alerts
+* Send complaint/message to admin
+* View admin replies
+* Download fee receipt if available
+* Parent cannot view other students
+* Parent cannot edit marks, attendance, or fees
+
+Database schema:
+Create Supabase tables with proper relations.
+
+profiles:
+
+* id uuid primary key references auth.users(id)
+* full_name text
+* role text check role in ('owner','admin','teacher','parent','student')
+* phone text
+* email text
+* avatar_url text
+* status text default 'active'
+* created_at timestamp default now()
+
+students:
+
+* id uuid primary key default gen_random_uuid()
+* profile_id uuid references profiles(id) nullable
+* admission_no text unique
+* full_name text not null
+* father_name text
+* guardian_phone text
+* gender text
+* date_of_birth date
+* class_id uuid references classes(id)
+* batch_id uuid references batches(id)
+* status text default 'active'
+* address text
+* profile_image_url text
+* created_at timestamp default now()
+
+parents:
+
+* id uuid primary key default gen_random_uuid()
+* profile_id uuid references profiles(id)
+* full_name text not null
+* phone text
+* email text
+* address text
+* created_at timestamp default now()
+
+student_parents:
+
+* id uuid primary key default gen_random_uuid()
+* student_id uuid references students(id) on delete cascade
+* parent_id uuid references parents(id) on delete cascade
+* relation text
+* is_primary boolean default false
+* created_at timestamp default now()
+
+teachers:
+
+* id uuid primary key default gen_random_uuid()
+* profile_id uuid references profiles(id)
+* full_name text not null
+* phone text
+* email text
+* qualification text
+* bio text
+* subjects text[]
+* photo_url text
+* status text default 'active'
+* created_at timestamp default now()
+
+classes:
+
+* id uuid primary key default gen_random_uuid()
+* name text not null
+* level text
+* monthly_fee numeric
+* created_at timestamp default now()
+
+subjects:
+
+* id uuid primary key default gen_random_uuid()
+* name text not null
+* class_id uuid references classes(id)
+* created_at timestamp default now()
+
+batches:
+
+* id uuid primary key default gen_random_uuid()
+* name text
+* class_id uuid references classes(id)
+* timing text
+* created_at timestamp default now()
+
+teacher_assignments:
+
+* id uuid primary key default gen_random_uuid()
+* teacher_id uuid references teachers(id)
+* class_id uuid references classes(id)
+* subject_id uuid references subjects(id)
+* batch_id uuid references batches(id)
+* created_at timestamp default now()
+
+attendance:
+
+* id uuid primary key default gen_random_uuid()
+* student_id uuid references students(id)
+* class_id uuid references classes(id)
+* batch_id uuid references batches(id)
+* date date
+* status text check status in ('present','absent','late','leave')
+* marked_by uuid references profiles(id)
+* remarks text
+* created_at timestamp default now()
+
+fee_records:
+
+* id uuid primary key default gen_random_uuid()
+* student_id uuid references students(id)
+* month text
+* year integer
+* amount numeric
+* paid_amount numeric default 0
+* status text check status in ('paid','unpaid','partial')
+* due_date date
+* paid_at timestamp
+* payment_method text
+* receipt_no text
+* notes text
+* created_by uuid references profiles(id)
+* created_at timestamp default now()
+
+exams:
+
+* id uuid primary key default gen_random_uuid()
+* title text
+* class_id uuid references classes(id)
+* subject_id uuid references subjects(id)
+* total_marks numeric
+* exam_date date
+* is_published boolean default false
+* created_at timestamp default now()
+
+results:
+
+* id uuid primary key default gen_random_uuid()
+* exam_id uuid references exams(id)
+* student_id uuid references students(id)
+* obtained_marks numeric
+* grade text
+* remarks text
+* entered_by uuid references profiles(id)
+* approved_by uuid references profiles(id)
+* is_published boolean default false
+* created_at timestamp default now()
+
+homework:
+
+* id uuid primary key default gen_random_uuid()
+* title text
+* description text
+* class_id uuid references classes(id)
+* subject_id uuid references subjects(id)
+* teacher_id uuid references teachers(id)
+* due_date date
+* attachment_url text
+* created_at timestamp default now()
+
+notices:
+
+* id uuid primary key default gen_random_uuid()
+* title text
+* body text
+* audience text check audience in ('all','admins','teachers','parents','students','class')
+* class_id uuid references classes(id) nullable
+* created_by uuid references profiles(id)
+* is_published boolean default true
+* created_at timestamp default now()
+
+admission_inquiries:
+
+* id uuid primary key default gen_random_uuid()
+* student_name text
+* guardian_name text
+* phone text
+* desired_class text
+* current_school text
+* message text
+* status text default 'new'
+* notes text
+* created_at timestamp default now()
+
+gallery:
+
+* id uuid primary key default gen_random_uuid()
+* title text
+* image_url text
+* category text
+* is_public boolean default true
+* uploaded_by uuid references profiles(id)
+* created_at timestamp default now()
+
+public_results:
+
+* id uuid primary key default gen_random_uuid()
+* title text
+* description text
+* image_url text
+* year integer
+* category text
+* is_public boolean default true
+* created_at timestamp default now()
+
+messages:
+
+* id uuid primary key default gen_random_uuid()
+* sender_id uuid references profiles(id)
+* receiver_id uuid references profiles(id)
+* subject text
+* body text
+* status text default 'unread'
+* created_at timestamp default now()
+
+settings:
+
+* id uuid primary key default gen_random_uuid()
+* key text unique
+* value jsonb
+* updated_at timestamp default now()
+
+Security requirements:
+Enable Row Level Security on every table.
+Admin/owner:
+
+* Can read/write everything
+  Teacher:
+* Can read assigned classes/students
+* Can mark attendance for assigned classes
+* Can add homework for assigned classes
+* Can enter marks for assigned classes
+* Cannot access fee records
+* Cannot access parent private data except necessary contact if allowed
+  Parent:
+* Can read only own profile
+* Can read only linked children
+* Can read linked children attendance, results, homework, notices, fee records
+* Can send messages to admin
+  Student:
+* Can read only own profile
+* Can read own attendance, homework, notices, and published results
+* Cannot see full fee records
+* Cannot see other students
+  Public:
+* Can read only public website content, public gallery, public results, public fee structure, and public academy info
+
+Never expose Supabase service role key in frontend.
+Use environment variables:
+
+* NEXT_PUBLIC_SUPABASE_URL
+* NEXT_PUBLIC_SUPABASE_ANON_KEY
+* SUPABASE_SERVICE_ROLE_KEY only on server
+* NEXT_PUBLIC_SITE_URL
+
+Admin account creation:
+Because public signup is disabled, create a secure admin-only user creation flow.
+Admin can create teacher, parent, and student accounts.
+Use server-side function with Supabase service role key.
+After account creation, profile row must be created automatically.
+Admin can reset passwords.
+
+Supabase Free Tier optimization:
+Design for 130 students and 7 teachers but scalable to 500+ students later.
+Use pagination in all tables.
+Use filters.
+Use indexes:
+
+* students.class_id
+* students.batch_id
+* attendance.student_id
+* attendance.date
+* fee_records.student_id
+* fee_records.month/year
+* results.student_id
+* teacher_assignments.teacher_id
+* student_parents.parent_id
+  Do not load all students at once.
+  Do not store videos in Supabase.
+  Compress images.
+  Use static public folder for fixed website images.
+  Use Supabase Storage only for admin-uploaded dynamic images.
+
+Folder structure:
+Use this structure:
+
+app/
+
+* page.tsx
+* about/page.tsx
+* courses/page.tsx
+* fees/page.tsx
+* results/page.tsx
+* gallery/page.tsx
+* teachers/page.tsx
+* admissions/page.tsx
+* contact/page.tsx
+* login/page.tsx
+* dashboard/admin/page.tsx
+* dashboard/teacher/page.tsx
+* dashboard/parent/page.tsx
+* dashboard/student/page.tsx
+
+components/
+
+* layout/
+* public/
+* dashboard/
+* forms/
+* tables/
+* cards/
+* animations/
+
+lib/
+
+* supabase/
+* auth/
+* validations/
+* utils/
+
+server/
+
+* actions/
+* queries/
+
+supabase/
+
+* schema.sql
+* policies.sql
+* seed.sql
+
+UI components:
+Use shadcn/ui:
+
+* Button
+* Card
+* Dialog
+* Sheet
+* Table
+* Badge
+* Avatar
+* Tabs
+* Dropdown
+* Form
+* Input
+* Textarea
+* Select
+* Calendar
+* Toast/Sonner
+* Skeleton
+
+Animations:
+Use Framer Motion for:
+
+* Page transitions
+* Hero animation
+* Cards reveal
+* Gallery reveal
+* Counter animation
+* Dashboard cards
+* Teacher cards
+* Course cards
+* Result cards
+  Use animations carefully so website stays fast.
+
+Dashboard design:
+Use premium admin dashboard layout:
+
+* Sidebar
+* Topbar
+* Search bar
+* Notification bell
+* User profile dropdown
+* Breadcrumbs
+* Cards
+* Charts
+* Responsive tables
+* Mobile sidebar drawer
+
+Required seed data:
+Seed classes:
+
+* Class 1
+* Class 2
+* Class 3
+* Class 4
+* Class 5
+* Class 6
+* Class 7
+* Class 8
+* Class 9
+* Class 10
+* FSC
+* ICS
+
+Seed fee plans:
+
+* Class 1–4: 1500
+* Class 5–6: 2000
+* Class 7–8: 2500
+* Class 9–10: 3500
+* FSC: 1500 per subject
+
+Seed teachers:
+
+* Sir Junaid — Maths, Computer, Urdu
+* Sir Shoaib — Chemistry, Physics
+* Sir Mudasir — English
+* Miss Uzra — Biology, English, General Science
+* Miss Shanzil — Islamiat, Tarjama tul Quran
+* Miss Hijab — General Maths
+* Miss Komal — Arts subjects
+
+Deliverables:
+
+1. Complete Next.js app
+2. Supabase database schema
+3. RLS policies
+4. Seed data
+5. Public website pages
+6. Admin dashboard
+7. Teacher dashboard
+8. Parent dashboard
+9. Student dashboard
+10. Authentication and role redirects
+11. Admin-only account creation
+12. Image gallery system
+13. Admission inquiry system
+14. Fee management system
+15. Attendance system
+16. Result system
+17. Homework/notice system
+18. README setup guide
+19. .env.example
+20. Deployment guide
+
+Final quality:
+The final website must look like a premium real academy website, not a simple template. It should use the uploaded photos beautifully, have animated cards, smooth transitions, professional dashboards, secure role-based access, and be optimized for Supabase Free Tier.
+
+
+
+
+
+
+
+IMPORTANT CORRECTIONS AND ADDITIONS TO THE AWAN ACADEMY PROJECT:
+
+Please apply all of the following fixes and additions to the 
+main project prompt. These correct missing schema items, 
+ambiguous rules, and logic gaps.
+
+────────────────────────────────────────
+FIX 1 — EMAIL FORMAT
+────────────────────────────────────────
+Use plain email everywhere, not markdown link syntax.
+Correct email: awansacademy@gmail.com
+Do not write it as [email](mailto:email) anywhere in code or UI.
+
+────────────────────────────────────────
+FIX 2 — ADD MISSING TIMETABLE TABLE
+────────────────────────────────────────
+Add this table to the Supabase schema.
+It is needed for student and teacher dashboards.
+
+timetable:
+- id uuid primary key default gen_random_uuid()
+- class_id uuid references classes(id)
+- subject_id uuid references subjects(id)
+- teacher_id uuid references teachers(id)
+- batch_id uuid references batches(id)
+- day_of_week text check (day_of_week in 
+  ('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'))
+- start_time time
+- end_time time
+- created_at timestamp default now()
+
+Enable RLS on this table.
+Admin: full access.
+Teacher: read own assigned timetable only.
+Student: read own class timetable only.
+Parent: read linked child class timetable only.
+
+────────────────────────────────────────
+FIX 3 — FSC AND ICS PER-SUBJECT FEES
+────────────────────────────────────────
+FSC and ICS fees are charged per subject, not per class.
+Add subject_id to fee_records table:
+
+ALTER TABLE fee_records 
+ADD COLUMN subject_id uuid references subjects(id) nullable;
+
+For FSC and ICS students, each fee record should be linked 
+to a specific subject.
+For all other classes (1-10), subject_id remains null.
+Admin should be able to add multiple fee records per FSC/ICS 
+student, one per subject.
+
+ICS fee is also PKR 1500 per subject, same as FSC.
+Add this to fee structure page and seed data.
+
+────────────────────────────────────────
+FIX 4 — MESSAGES TABLE TYPE FIELD
+────────────────────────────────────────
+The messages table is used for both parent complaints and 
+admin-to-teacher announcements. Add a type field to 
+distinguish them.
+
+Add this column to messages table:
+- type text check (type in 
+  ('complaint','inquiry','announcement','reply')) 
+  default 'complaint'
+
+Parent can only send type: complaint or inquiry.
+Admin can send type: announcement or reply.
+Teacher receives type: announcement only.
+i Filter messages in dashboard by type.
+
+────────────────────────────────────────
+FIX 5 — RENAME public_results TABLE
+────────────────────────────────────────
+Rename public_results table to result_highlights 
+everywhere in schema, policies, queries, and UI.
+This avoids confusion with the private results table 
+that stores student exam marks.
+
+result_highlights = public poster/image based achievements 
+shown on the public Results page.
+
+results = private per-student exam marks, 
+only visible to admin, teacher, parent, and student.
+
+────────────────────────────────────────
+FIX 6 — ADD is_published TO HOMEWORK TABLE
+────────────────────────────────────────
+Teachers should be able to save homework as draft 
+before publishing to students.
+
+Add this column to homework table:
+- is_published boolean default false
+
+Students and parents can only see homework 
+where is_published = true.
+Teacher sees all their own homework including drafts.
+Admin sees everything.
+
+────────────────────────────────────────
+FIX 7 — EXPLICIT FEE_RECORDS RLS FOR STUDENTS
+────────────────────────────────────────
+Students must never be able to read fee_records.
+Apply this strict RLS policy on fee_records:
+
+- Admin / Owner: full read and write access.
+- Parent: SELECT only where student_id is linked 
+  to their profile via student_parents table.
+- Teacher: NO access at all.
+- Student: NO access at all. 
+  Do not create any SELECT policy for student role 
+  on fee_records table.
+- Public: NO access.
+
+This is a hard privacy rule. 
+Student dashboard must never show fee amounts, 
+payment status, receipt numbers, or due dates.
+
+────────────────────────────────────────
+SUMMARY OF ALL FIXES:
+────────────────────────────────────────
+1. Use plain email, not markdown mailto links.
+2. Add timetable table with RLS.
+3. Add subject_id to fee_records for FSC/ICS per-subject fees.
+4. Add ICS fee: PKR 1500 per subject same as FSC.
+5. Add type field to messages table.
+6. Rename public_results to result_highlights everywhere.
+7. Add is_published to homework table.
+8. Block student role completely from fee_records via RLS.
+
+Apply all of these before starting development.
+These are not optional — they fix real logic gaps 
+and security issues in the original prompt.
+
+
+
+
+
+
+
+
+IMPORTANT INSTRUCTIONS FOR REPLIT AI AGENT:
+
+This is for The Awan Academy project.
+Read all of these rules carefully before starting.
+
+────────────────────────────────────────
+RULE 1 — DO NOT USE RAW SQL OR POSTGRESQL ORM
+────────────────────────────────────────
+Do NOT use:
+- Raw SQL queries
+- Prisma ORM
+- Drizzle ORM
+- TypeORM
+- Any direct PostgreSQL connection
+- pg or postgres npm packages
+
+Only use the official Supabase JavaScript client:
+- @supabase/supabase-js
+- @supabase/ssr (for Next.js server components)
+
+All database reads and writes must go through 
+Supabase client only.
+Never connect directly to PostgreSQL.
+The Supabase schema, RLS policies, and tables 
+are already defined. Just use the Supabase client 
+to interact with them.
+
+────────────────────────────────────────
+RULE 2 — DO NOT USE A SEPARATE SERVER
+────────────────────────────────────────
+Do NOT create:
+- A separate Express server
+- A separate Node.js server
+- A separate API server
+- A separate backend folder with its own entry point
+- Any standalone server file like server.js or index.js
+
+All server logic must live inside Next.js only:
+- Use Next.js Server Actions for form submissions 
+  and mutations
+- Use Next.js Route Handlers (app/api/) for 
+  any API endpoints needed
+- Use Next.js middleware for auth protection
+
+There is only ONE project. One Next.js app.
+No separate backend. No separate server process.
+
+────────────────────────────────────────
+RULE 3 — ALL DATA MUST BE IN SUPABASE
+────────────────────────────────────────
+Do NOT use:
+- Local JSON files as database
+- SQLite
+- MongoDB
+- Firebase
+- Any other database
+
+All data must be stored in Supabase:
+- Students, teachers, parents, classes in Supabase tables
+- Images uploaded via Supabase Storage
+- Auth handled by Supabase Auth
+- All queries via Supabase client
+
+────────────────────────────────────────
+RULE 4 — ADMIN PANEL MUST BE FULLY WORKING
+────────────────────────────────────────
+The admin dashboard is the most important part.
+It must be fully functional, not just UI mockup.
+
+Admin panel must actually work:
+- Add student → saves to Supabase students table
+- Add teacher → saves to Supabase teachers table
+- Add parent → saves to Supabase parents table
+- Mark attendance → saves to Supabase attendance table
+- Add fee record → saves to Supabase fee_records table
+- Upload gallery image → saves to Supabase Storage
+- Create notice → saves to Supabase notices table
+- View admission inquiries → reads from Supabase
+- Create exam and results → saves to Supabase
+
+Do not build fake/hardcoded admin panels.
+Every button and form must connect to real Supabase data.
+
+────────────────────────────────────────
+RULE 5 — FULL WEBSITE MUST BE WORKING
+────────────────────────────────────────
+The public website pages must also be fully working:
+
+- Home page loads real stats from Supabase settings table
+- Gallery page loads real images from Supabase
+- Results page loads real public result highlights
+- Teachers page loads real teacher data from Supabase
+- Admissions page form saves inquiry to Supabase
+- Contact page form works and saves to Supabase
+- Fee structure page shows correct fee data
+
+Do not use hardcoded dummy data on public pages
+unless it is fallback for empty database on first run.
+
+────────────────────────────────────────
+RULE 6 — ENVIRONMENT VARIABLES
+────────────────────────────────────────
+Use these environment variables.
+Never hardcode keys in code.
+
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+NEXT_PUBLIC_SITE_URL=your_site_url
+
+SUPABASE_SERVICE_ROLE_KEY must only be used 
+on the server side (Server Actions, Route Handlers).
+Never expose service role key in client components.
+
+────────────────────────────────────────
+RULE 7 — AUTHENTICATION
+────────────────────────────────────────
+Use Supabase Auth only.
+No custom JWT. No NextAuth. No Passport.js.
+
+After login, redirect by role:
+- admin or owner → /dashboard/admin
+- teacher → /dashboard/teacher
+- parent → /dashboard/parent
+- student → /dashboard/student
+
+Protect all dashboard routes with Next.js middleware.
+Public pages are accessible without login.
+
+────────────────────────────────────────
+QUICK SUMMARY:
+────────────────────────────────────────
+✅ Use Supabase client for all database operations
+✅ Use Next.js Server Actions and Route Handlers
+✅ Use Supabase Auth for authentication
+✅ All data stored in Supabase
+✅ Admin panel fully functional with real data
+✅ Full public website working with real data
+✅ One single Next.js project, no separate server
+
+❌ No raw SQL or PostgreSQL ORM
+❌ No separate Express or Node server
+❌ No SQLite, MongoDB, Firebase, or other database
+❌ No hardcoded fake data in production
+❌ No public signup, only admin creates accounts
+❌ No service role key in client-side code

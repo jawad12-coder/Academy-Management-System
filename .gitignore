@@ -1,0 +1,14 @@
+node_modules/
+**/node_modules/
+**/dist/
+*.tsbuildinfo
+
+.env
+.env.*
+,env.local
+!.env.example
+
+# Local database password/secret note; never commit this file.
+supase.txt
+
+.vercel/
