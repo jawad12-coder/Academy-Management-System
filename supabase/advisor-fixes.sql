@@ -1,10 +1,26 @@
 -- Supabase Advisor hardening for this project.
 -- Safe to run more than once after policies.sql.
 
-ALTER FUNCTION public.get_my_role() SET search_path = public, pg_temp;
-REVOKE ALL ON FUNCTION public.get_my_role() FROM PUBLIC;
-REVOKE ALL ON FUNCTION public.get_my_role() FROM anon;
-GRANT EXECUTE ON FUNCTION public.get_my_role() TO authenticated, service_role;
+-- SECURITY DEFINER helpers used by RLS should live outside schemas exposed by
+-- the Data API. Moving the function preserves its OID, so existing policies
+-- continue to work without being recreated.
+CREATE SCHEMA IF NOT EXISTS private;
+REVOKE ALL ON SCHEMA private FROM PUBLIC;
+GRANT USAGE ON SCHEMA private TO authenticated, service_role;
+
+DO $$
+BEGIN
+  IF to_regprocedure('private.get_my_role()') IS NULL
+     AND to_regprocedure('public.get_my_role()') IS NOT NULL THEN
+    ALTER FUNCTION public.get_my_role() SET SCHEMA private;
+  END IF;
+END
+$$;
+
+ALTER FUNCTION private.get_my_role() SET search_path = '';
+REVOKE ALL ON FUNCTION private.get_my_role() FROM PUBLIC;
+REVOKE ALL ON FUNCTION private.get_my_role() FROM anon;
+GRANT EXECUTE ON FUNCTION private.get_my_role() TO authenticated, service_role;
 
 -- This helper is not used by the application and must not be callable through
 -- PostgREST by anonymous or signed-in users.
