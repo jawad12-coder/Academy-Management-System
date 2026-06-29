@@ -4,7 +4,7 @@ import { Users, BookOpen, Award, ChevronRight } from 'lucide-react';
 import heroBg from '@assets/pictures_1782659947703.jpeg';
 import classPhoto from '@assets/students_learninig_1782659969968.jpeg';
 import teacher1 from '@assets/sir_sohaib_1782659947704.jpeg';
-import teacher2 from '@assets/Sir1_1782659947704.jpeg';
+import teacher2 from '@assets/Sir junaid.jpeg';
 import teacher3 from '@assets/Sir2_1782659969969.jpeg';
 
 const stats = [
@@ -264,11 +264,11 @@ export function Home() {
                 transition={{ delay: i * 0.1 }}
                 className="group rounded-2xl overflow-hidden bg-card border border-border shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                <div className="aspect-square overflow-hidden relative bg-muted">
+                <div className="aspect-[4/5] overflow-hidden relative bg-muted">
                   <img 
                     src={teacher.image} 
                     alt={teacher.name} 
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>

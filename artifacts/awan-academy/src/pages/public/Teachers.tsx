@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { BookOpen } from 'lucide-react';
-import sirJunaid from '@assets/Sir1_1782659947704.jpeg';
+import sirJunaid from '@assets/Sir junaid.jpeg';
 import sirShoaib from '@assets/sir_sohaib_1782659947704.jpeg';
 import sirMudasir from '@assets/Sir2_1782659969969.jpeg';
+import missUzra from '@assets/miss uzra.jpeg';
+import missShanzil from '@assets/miss shanzil.jpeg';
 
 const teachers = [
   {
@@ -26,13 +28,13 @@ const teachers = [
   {
     name: "Miss Uzra",
     subjects: ["Biology", "English", "General Science"],
-    image: null,
+    image: missUzra,
     bio: "Dedicated teacher with a passion for life sciences and foundational English."
   },
   {
     name: "Miss Shanzil",
     subjects: ["Islamiat", "Tarjama tul Quran"],
-    image: null,
+    image: missShanzil,
     bio: "Guiding students in religious studies and moral values with patience."
   },
   {
@@ -86,12 +88,12 @@ export function Teachers() {
                 style={{ transformPerspective: 1000 }}
                 className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
               >
-                <div className="h-64 bg-muted relative overflow-hidden flex items-center justify-center">
+                <div className="aspect-[4/5] bg-muted relative overflow-hidden flex items-center justify-center">
                   {teacher.image ? (
                     <img 
                       src={teacher.image} 
                       alt={teacher.name} 
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-cover object-center"
                     />
                   ) : (
                     <div className="w-24 h-24 rounded-full bg-primary/10 text-primary flex items-center justify-center font-serif text-4xl font-bold">
