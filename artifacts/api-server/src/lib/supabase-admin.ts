@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { logger } from './logger';
+import { logger } from './logger.js';
 
 /**
  * Replit sometimes stores multiple secrets concatenated into one env var value,
