@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, type Request, type Response } from 'express';
 import { requireAuth, requireRole } from '../middlewares/auth.js';
 import { supabaseAdmin } from '../lib/supabase-admin.js';
 
 const router = Router();
 
 // POST /admin/create-user
-router.post('/create-user', requireAuth, requireRole('owner', 'admin'), async (req, res) => {
+router.post('/create-user', requireAuth, requireRole('owner', 'admin'), async (req: Request, res: Response) => {
   const { email, password, fullName, role, phone } = req.body;
 
   if (!email || !password || !fullName || !role) {
@@ -61,7 +61,7 @@ router.post('/create-user', requireAuth, requireRole('owner', 'admin'), async (r
 });
 
 // POST /admin/reset-password
-router.post('/reset-password', requireAuth, requireRole('owner', 'admin'), async (req, res) => {
+router.post('/reset-password', requireAuth, requireRole('owner', 'admin'), async (req: Request, res: Response) => {
   const { userId, newPassword } = req.body;
 
   if (!userId || !newPassword) {

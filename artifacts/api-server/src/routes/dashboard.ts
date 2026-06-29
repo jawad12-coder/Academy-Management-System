@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, type Request, type Response } from 'express';
 import { requireAuth, requireRole } from '../middlewares/auth.js';
 import { supabaseAdmin } from '../lib/supabase-admin.js';
 
 const router = Router();
 
 // GET /dashboard/overview
-router.get('/overview', requireAuth, requireRole('owner', 'admin'), async (req, res) => {
+router.get('/overview', requireAuth, requireRole('owner', 'admin'), async (req: Request, res: Response) => {
   try {
     const now = new Date();
     const currentMonth = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -83,7 +83,7 @@ router.get('/overview', requireAuth, requireRole('owner', 'admin'), async (req, 
 });
 
 // GET /dashboard/attendance-summary
-router.get('/attendance-summary', requireAuth, requireRole('owner', 'admin', 'teacher'), async (req, res) => {
+router.get('/attendance-summary', requireAuth, requireRole('owner', 'admin', 'teacher'), async (req: Request, res: Response) => {
   try {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -151,7 +151,7 @@ router.get('/attendance-summary', requireAuth, requireRole('owner', 'admin', 'te
 });
 
 // GET /dashboard/fee-summary
-router.get('/fee-summary', requireAuth, requireRole('owner', 'admin'), async (req, res) => {
+router.get('/fee-summary', requireAuth, requireRole('owner', 'admin'), async (req: Request, res: Response) => {
   try {
     const { data } = await supabaseAdmin
       .from('fee_records')

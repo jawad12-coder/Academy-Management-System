@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, type Request, type Response } from 'express';
 import { supabaseAdmin } from '../lib/supabase-admin.js';
 
 const router = Router();
 
 // POST /public/inquiries – admission inquiry form (no auth required)
-router.post('/inquiries', async (req, res) => {
+router.post('/inquiries', async (req: Request, res: Response) => {
   const { studentName, guardianName, phone, desiredClass, currentSchool, message } = req.body;
 
   if (!studentName || !guardianName || !phone || !desiredClass) {
@@ -32,7 +32,7 @@ router.post('/inquiries', async (req, res) => {
 });
 
 // POST /public/contact – contact form (no auth required)
-router.post('/contact', async (req, res) => {
+router.post('/contact', async (req: Request, res: Response) => {
   const { name, email, phone, subject, message } = req.body;
 
   if (!name || !email || !message) {

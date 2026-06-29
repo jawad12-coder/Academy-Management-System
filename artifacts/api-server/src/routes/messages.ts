@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, type Request, type Response } from 'express';
 import { requireAuth, requireRole } from '../middlewares/auth.js';
 import { supabaseAdmin } from '../lib/supabase-admin.js';
 
 const router = Router();
 router.use(requireAuth);
 
-router.get('/', async (req, res) => {
+router.get('/', async (req: Request, res: Response) => {
   let query = supabaseAdmin
     .from('messages')
     .select('*, sender:profiles!messages_sender_id_fkey(full_name,email,role), receiver:profiles!messages_receiver_id_fkey(full_name,email,role)')
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
   res.json(data ?? []);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   const { receiverId, subject, body, type } = req.body ?? {};
   if (!body?.trim()) { res.status(400).json({ error: 'Message body is required' }); return; }
 
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
   res.status(201).json(data);
 });
 
-router.patch('/:id/read', async (req, res) => {
+router.patch('/:id/read', async (req: Request, res: Response) => {
   let query = supabaseAdmin.from('messages').update({ status: 'read' }).eq('id', req.params.id);
   if (!['owner', 'admin'].includes(req.user!.role)) query = query.eq('receiver_id', req.user!.userId);
   const { error } = await query;
