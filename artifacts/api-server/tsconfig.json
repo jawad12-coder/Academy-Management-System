@@ -2,12 +2,13 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "incremental": true,
+    "noCheck": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "outDir": "dist",
-    "rootDir": ".",
+    "rootDir": "src",
     "types": ["node"]
   },
-  "include": ["src", "api"],
+  "include": ["src"],
   "references": [
     {
       "path": "../../lib/db"

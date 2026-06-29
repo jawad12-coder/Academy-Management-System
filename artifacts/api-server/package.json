@@ -7,8 +7,8 @@
     "dev": "export NODE_ENV=development && pnpm run build && pnpm run start",
     "build": "node ./build.mjs",
     "start": "node --enable-source-maps ./dist/index.mjs",
-    "typecheck": "tsc -p tsconfig.json --noEmit && pnpm run typecheck:vercel",
-    "typecheck:vercel": "tsc --noEmit --strict --module NodeNext --moduleResolution NodeNext --target ES2022 --esModuleInterop --skipLibCheck api/index.ts"
+    "typecheck": "tsc -p tsconfig.json --noEmit --noCheck false && pnpm run typecheck:vercel",
+    "typecheck:vercel": "tsc --noEmit --noCheck false --strict --module NodeNext --moduleResolution NodeNext --target ES2022 --esModuleInterop --skipLibCheck src/app.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",
