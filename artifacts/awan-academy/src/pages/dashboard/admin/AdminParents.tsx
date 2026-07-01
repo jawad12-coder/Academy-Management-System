@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { useAdminCreateUser } from '@workspace/api-client-react';
+import { customFetch } from '@workspace/api-client-react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -21,7 +21,7 @@ export function AdminParents() {
   const [linkParent, setLinkParent] = useState<ParentRow | null>(null);
   const [selectedStudent, setSelectedStudent] = useState('');
   const [form, setForm] = useState({ fullName: '', email: '', password: '', phone: '' });
-  const createUser = useAdminCreateUser();
+  const [creating, setCreating] = useState(false);
   const { toast } = useToast();
 
   async function load() {
@@ -39,11 +39,11 @@ export function AdminParents() {
     event.preventDefault();
     if (!form.fullName || !form.email || form.password.length < 8) { toast({ variant: 'destructive', title: 'Name, email, and an 8-character password are required.' }); return; }
     try {
-      const created = await createUser.mutateAsync({ data: { email: form.email, password: form.password, fullName: form.fullName, role: 'parent', phone: form.phone || null } });
-      const { error } = await supabase.from('parents').insert({ profile_id: created.userId, full_name: form.fullName, email: form.email, phone: form.phone || null });
-      if (error) throw error;
+      setCreating(true);
+      await customFetch('/api/admin/create-user', { method: 'POST', responseType: 'json', body: JSON.stringify({ email: form.email, password: form.password, fullName: form.fullName, role: 'parent', phone: form.phone || null }) });
       toast({ title: 'Parent account created' }); setCreateOpen(false); setForm({ fullName: '', email: '', password: '', phone: '' }); await load();
     } catch (error: any) { toast({ variant: 'destructive', title: 'Creation failed', description: error.message }); }
+    finally { setCreating(false); }
   }
 
   async function linkChild() {
@@ -68,7 +68,7 @@ export function AdminParents() {
 
     <Dialog open={createOpen} onOpenChange={setCreateOpen}><DialogContent><DialogHeader><DialogTitle>Create Parent Portal Account</DialogTitle></DialogHeader><form onSubmit={createParent} className="space-y-4">
       <Field label="Full name"><Input value={form.fullName} onChange={e => setForm({...form,fullName:e.target.value})} /></Field><Field label="Email"><Input type="email" value={form.email} onChange={e => setForm({...form,email:e.target.value})} /></Field><Field label="Temporary password"><Input type="password" value={form.password} onChange={e => setForm({...form,password:e.target.value})} /></Field><Field label="Phone"><Input value={form.phone} onChange={e => setForm({...form,phone:e.target.value})} /></Field>
-      <div className="flex justify-end"><Button disabled={createUser.isPending}>{createUser.isPending ? 'Creating…' : 'Create Parent'}</Button></div>
+      <div className="flex justify-end"><Button disabled={creating}>{creating ? 'Creating…' : 'Create Parent'}</Button></div>
     </form></DialogContent></Dialog>
 
     <Dialog open={Boolean(linkParent)} onOpenChange={open => !open && setLinkParent(null)}><DialogContent><DialogHeader><DialogTitle>Link child to {linkParent?.full_name}</DialogTitle></DialogHeader>

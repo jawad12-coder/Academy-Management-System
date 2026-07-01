@@ -111,12 +111,15 @@ export function StudentOverview() {
           .limit(5);
         setResults((resultRows ?? []) as unknown as ResultItem[]);
 
-        // 5. Recent notices (all + students)
-        const { data: noticeRows } = await supabase
+        // 5. Recent notices for everyone, students, or this student's class.
+        let noticeQuery = supabase
           .from('notices')
           .select('id, title, body, created_at')
-          .in('audience', ['all', 'students'])
-          .eq('is_published', true)
+          .eq('is_published', true);
+        noticeQuery = cid
+          ? noticeQuery.or(`audience.in.(all,students),and(audience.eq.class,class_id.eq.${cid})`)
+          : noticeQuery.in('audience', ['all', 'students']);
+        const { data: noticeRows } = await noticeQuery
           .order('created_at', { ascending: false })
           .limit(4);
         setNotices(noticeRows ?? []);

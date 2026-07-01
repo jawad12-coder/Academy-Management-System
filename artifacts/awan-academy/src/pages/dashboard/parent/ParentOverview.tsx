@@ -42,6 +42,7 @@ export function ParentOverview() {
     if (!user) return;
 
     async function load() {
+      const linkedClassIds: string[] = [];
       try {
         // 1. Get parent record
         const { data: parentRow } = await supabase
@@ -119,18 +120,21 @@ export function ParentOverview() {
               })
             );
 
+            linkedClassIds.push(...new Set((students ?? []).map((student: any) => student.class_id).filter(Boolean)) as unknown as string[]);
+
             setChildren(enriched);
           }
         }
 
         // 3. Notices for parents
-        const { data: noticeData } = await supabase
+        let noticeQuery = supabase
           .from('notices')
           .select('id, title, body, audience, created_at')
-          .in('audience', ['all', 'parents'])
-          .eq('is_published', true)
-          .order('created_at', { ascending: false })
-          .limit(6);
+          .eq('is_published', true);
+        noticeQuery = linkedClassIds.length
+          ? noticeQuery.or(`audience.in.(all,parents),and(audience.eq.class,class_id.in.(${linkedClassIds.join(',')}))`)
+          : noticeQuery.in('audience', ['all', 'parents']);
+        const { data: noticeData } = await noticeQuery.order('created_at', { ascending: false }).limit(6);
 
         setNotices(noticeData ?? []);
       } finally {

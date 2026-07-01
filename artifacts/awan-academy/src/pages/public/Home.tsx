@@ -6,6 +6,8 @@ import classPhoto from '@assets/students_learninig_1782659969968.jpeg';
 import teacher1 from '@assets/sir_sohaib_1782659947704.jpeg';
 import teacher2 from '@assets/Sir junaid.jpeg';
 import teacher3 from '@assets/Sir2_1782659969969.jpeg';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 
 const stats = [
   { value: '130+', label: 'Students Enrolled' },
@@ -37,13 +39,19 @@ const courseLevels = [
   },
 ];
 
-const topTeachers = [
+const defaultTopTeachers = [
   { name: 'Sir Sohaib', subjects: 'Chemistry & Physics', image: teacher1 },
   { name: 'Sir Junaid', subjects: 'Mathematics, CS & Urdu', image: teacher2 },
   { name: 'Sir Mudasir', subjects: 'English Literature', image: teacher3 },
 ];
 
 export function Home() {
+  const [topTeachers, setTopTeachers] = useState(defaultTopTeachers);
+  useEffect(() => {
+    supabase.from('teachers').select('full_name,subjects,photo_url').eq('status', 'active').order('created_at').limit(3).then(({ data }) => {
+      setTopTeachers((data ?? []).map(teacher => ({ name: teacher.full_name, subjects: (teacher.subjects ?? []).join(', '), image: teacher.photo_url })) as typeof defaultTopTeachers);
+    });
+  }, []);
   return (
     <div className="w-full">
       {/* Hero Section */}

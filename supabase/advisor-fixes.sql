@@ -22,16 +22,32 @@ REVOKE ALL ON FUNCTION private.get_my_role() FROM PUBLIC;
 REVOKE ALL ON FUNCTION private.get_my_role() FROM anon;
 GRANT EXECUTE ON FUNCTION private.get_my_role() TO authenticated, service_role;
 
+-- An older deployment may leave a second copy in public after the private
+-- helper has already been created. Harden and revoke that legacy copy without
+-- dropping it, since older live policies may still depend on its OID.
+DO $$
+BEGIN
+  IF to_regprocedure('private.get_my_role()') IS NOT NULL
+     AND to_regprocedure('public.get_my_role()') IS NOT NULL THEN
+    ALTER FUNCTION public.get_my_role() SET search_path = '';
+    REVOKE ALL ON FUNCTION public.get_my_role() FROM PUBLIC;
+    REVOKE ALL ON FUNCTION public.get_my_role() FROM anon;
+    REVOKE ALL ON FUNCTION public.get_my_role() FROM authenticated;
+    GRANT EXECUTE ON FUNCTION public.get_my_role() TO service_role;
+  END IF;
+END
+$$;
+
 -- This helper is not used by the application and must not be callable through
 -- PostgREST by anonymous or signed-in users.
 DO $$
 BEGIN
   IF to_regprocedure('public.rls_auto_enable()') IS NOT NULL THEN
-    EXECUTE 'ALTER FUNCTION public.rls_auto_enable() SET search_path = public, pg_temp';
-    EXECUTE 'REVOKE ALL ON FUNCTION public.rls_auto_enable() FROM PUBLIC';
-    EXECUTE 'REVOKE ALL ON FUNCTION public.rls_auto_enable() FROM anon';
-    EXECUTE 'REVOKE ALL ON FUNCTION public.rls_auto_enable() FROM authenticated';
-    EXECUTE 'GRANT EXECUTE ON FUNCTION public.rls_auto_enable() TO service_role';
+    ALTER FUNCTION public.rls_auto_enable() SET search_path = public, pg_temp;
+    REVOKE ALL ON FUNCTION public.rls_auto_enable() FROM PUBLIC;
+    REVOKE ALL ON FUNCTION public.rls_auto_enable() FROM anon;
+    REVOKE ALL ON FUNCTION public.rls_auto_enable() FROM authenticated;
+    GRANT EXECUTE ON FUNCTION public.rls_auto_enable() TO service_role;
   END IF;
 END
 $$;

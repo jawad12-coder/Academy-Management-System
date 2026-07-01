@@ -22,12 +22,12 @@ export function AdminSettings() {
   const { toast } = useToast();
   const resetPassword = useAdminResetPassword();
   const [profiles, setProfiles] = useState<{ id: string; full_name: string; email: string; role: string }[]>([]);
-  const [academy, setAcademy] = useState({ academy_name: 'The Awan Academy', email: 'awansacademy@gmail.com', phone: '+92 333 1962657' });
+  const [academy, setAcademy] = useState({ academy_name: 'The Awan Academy', email: 'awansacademy@gmail.com', phone: '+92 333 1962657', timings: '4:00 PM - 7:30 PM', address: 'Pakistan', instagram: '', tiktok: '', youtube: '' });
   const [savingInfo, setSavingInfo] = useState(false);
 
   useEffect(() => {
     supabase.from('profiles').select('id,full_name,email,role').order('full_name').then(({ data }) => setProfiles(data ?? []));
-    supabase.from('settings').select('key,value').in('key', ['academy_name','email','phone']).then(({ data }) => {
+    supabase.from('settings').select('key,value').in('key', Object.keys(academy)).then(({ data }) => {
       if (!data) return;
       setAcademy(current => ({ ...current, ...Object.fromEntries(data.map(item => [item.key, String(item.value ?? '')])) }));
     });
@@ -128,6 +128,14 @@ export function AdminSettings() {
                 <Label>Contact Phone</Label>
                 <Input value={academy.phone} onChange={event => setAcademy({ ...academy, phone: event.target.value })} />
               </div>
+              <div className="space-y-2">
+                <Label>Academy Timings</Label>
+                <Input value={academy.timings} onChange={event => setAcademy({ ...academy, timings: event.target.value })} />
+              </div>
+              <div className="space-y-2"><Label>Address</Label><Input value={academy.address} onChange={event => setAcademy({ ...academy, address: event.target.value })} /></div>
+              <div className="space-y-2"><Label>Instagram URL</Label><Input value={academy.instagram} onChange={event => setAcademy({ ...academy, instagram: event.target.value })} /></div>
+              <div className="space-y-2"><Label>TikTok URL</Label><Input value={academy.tiktok} onChange={event => setAcademy({ ...academy, tiktok: event.target.value })} /></div>
+              <div className="space-y-2"><Label>YouTube URL</Label><Input value={academy.youtube} onChange={event => setAcademy({ ...academy, youtube: event.target.value })} /></div>
               <Button variant="outline" onClick={() => void saveAcademyInfo()} disabled={savingInfo}>{savingInfo ? 'Updating…' : 'Update Info'}</Button>
             </div>
           </CardContent>

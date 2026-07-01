@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin } from 'lucide-react';
 import logo from '@assets/logo_1782659947703.jpeg';
+import { usePublicSettings } from '@/hooks/use-public-settings';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -20,6 +21,7 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const publicSettings = usePublicSettings();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,16 +46,16 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <Phone size={14} className="text-accent" />
-            <span>+92 333 1962657</span>
+            <span>{publicSettings.phone}</span>
           </div>
           <div className="flex items-center gap-2">
             <Mail size={14} className="text-accent" />
-            <span>awansacademy@gmail.com</span>
+            <span>{publicSettings.email}</span>
           </div>
         </div>
         <div className="flex items-center gap-4">
           <span className="text-accent">Timings:</span>
-          <span>4:00 PM - 7:30 PM</span>
+          <span>{publicSettings.timings}</span>
         </div>
       </div>
 
@@ -188,22 +190,22 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
               <ul className="space-y-4 text-sm text-primary-foreground/80">
                 <li className="flex items-start gap-3">
                   <Phone size={18} className="text-accent shrink-0 mt-0.5" />
-                  <span>+92 333 1962657</span>
+                  <span>{publicSettings.phone}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Mail size={18} className="text-accent shrink-0 mt-0.5" />
-                  <span>awansacademy@gmail.com</span>
+                  <span>{publicSettings.email}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <MapPin size={18} className="text-accent shrink-0 mt-0.5" />
-                  <span>Pakistan</span>
+                  <span>{publicSettings.address}</span>
                 </li>
               </ul>
               <div className="mt-6 flex items-center gap-4 text-sm">
                 <span className="font-semibold text-accent">Follow us:</span>
-                <span className="opacity-80">Instagram</span>
-                <span className="opacity-80">TikTok</span>
-                <span className="opacity-80">YouTube</span>
+                {publicSettings.instagram && <a className="opacity-80 hover:text-accent" href={publicSettings.instagram} target="_blank" rel="noreferrer">Instagram</a>}
+                {publicSettings.tiktok && <a className="opacity-80 hover:text-accent" href={publicSettings.tiktok} target="_blank" rel="noreferrer">TikTok</a>}
+                {publicSettings.youtube && <a className="opacity-80 hover:text-accent" href={publicSettings.youtube} target="_blank" rel="noreferrer">YouTube</a>}
               </div>
             </div>
           </div>

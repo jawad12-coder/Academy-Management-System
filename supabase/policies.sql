@@ -87,6 +87,9 @@ CREATE POLICY "Teachers see own record" ON teachers FOR SELECT TO authenticated
 CREATE POLICY "All auth read active teachers" ON teachers FOR SELECT TO authenticated
   USING (status = 'active');
 
+CREATE POLICY "Public read active teachers" ON teachers FOR SELECT TO anon
+  USING (status = 'active');
+
 -- ─────────────────────────────────────────────────
 -- TEACHER ASSIGNMENTS
 -- ─────────────────────────────────────────────────

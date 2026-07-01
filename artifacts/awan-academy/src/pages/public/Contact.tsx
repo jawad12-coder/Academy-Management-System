@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
+import { usePublicSettings } from '@/hooks/use-public-settings';
 
 const formSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -28,6 +29,7 @@ const formSchema = z.object({
 export function Contact() {
   const { toast } = useToast();
   const submitContact = useSubmitContactForm();
+  const publicSettings = usePublicSettings();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -102,7 +104,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-foreground mb-1">Phone / WhatsApp</h4>
-                    <p className="text-muted-foreground">+92 333 1962657</p>
+                    <p className="text-muted-foreground">{publicSettings.phone}</p>
                   </div>
                 </div>
 
@@ -112,7 +114,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-foreground mb-1">Email</h4>
-                    <p className="text-muted-foreground">awansacademy@gmail.com</p>
+                    <p className="text-muted-foreground">{publicSettings.email}</p>
                   </div>
                 </div>
 
@@ -122,7 +124,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-foreground mb-1">Timings</h4>
-                    <p className="text-muted-foreground">Monday - Saturday<br/>4:00 PM to 7:30 PM</p>
+                    <p className="text-muted-foreground">Monday - Saturday<br/>{publicSettings.timings}</p>
                   </div>
                 </div>
 
@@ -132,7 +134,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="text-lg font-bold text-foreground mb-1">Location</h4>
-                    <p className="text-muted-foreground">Pakistan</p>
+                    <p className="text-muted-foreground">{publicSettings.address}</p>
                   </div>
                 </div>
               </div>
@@ -140,9 +142,9 @@ export function Contact() {
               <div className="mt-12 pt-8 border-t border-border">
                 <h4 className="font-bold text-foreground mb-4">Follow Us</h4>
                 <div className="flex gap-4">
-                  <span className="px-4 py-2 bg-muted rounded-md text-sm font-semibold hover:bg-primary hover:text-white transition-colors cursor-pointer">Instagram</span>
-                  <span className="px-4 py-2 bg-muted rounded-md text-sm font-semibold hover:bg-primary hover:text-white transition-colors cursor-pointer">TikTok</span>
-                  <span className="px-4 py-2 bg-muted rounded-md text-sm font-semibold hover:bg-primary hover:text-white transition-colors cursor-pointer">YouTube</span>
+                  {publicSettings.instagram && <a href={publicSettings.instagram} target="_blank" rel="noreferrer" className="px-4 py-2 bg-muted rounded-md text-sm font-semibold hover:bg-primary hover:text-white transition-colors">Instagram</a>}
+                  {publicSettings.tiktok && <a href={publicSettings.tiktok} target="_blank" rel="noreferrer" className="px-4 py-2 bg-muted rounded-md text-sm font-semibold hover:bg-primary hover:text-white transition-colors">TikTok</a>}
+                  {publicSettings.youtube && <a href={publicSettings.youtube} target="_blank" rel="noreferrer" className="px-4 py-2 bg-muted rounded-md text-sm font-semibold hover:bg-primary hover:text-white transition-colors">YouTube</a>}
                 </div>
               </div>
             </div>

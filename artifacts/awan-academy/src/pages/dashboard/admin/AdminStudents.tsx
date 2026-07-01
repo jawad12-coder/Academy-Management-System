@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { Class, Student } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
-import { useAdminCreateUser } from '@workspace/api-client-react';
+import { customFetch } from '@workspace/api-client-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,7 +27,6 @@ export function AdminStudents() {
   const [editing, setEditing] = useState<Student | null>(null);
   const [form, setForm] = useState<StudentForm>(emptyForm);
   const [saving, setSaving] = useState(false);
-  const createUser = useAdminCreateUser();
   const { toast } = useToast();
 
   async function load() {
@@ -73,13 +72,10 @@ export function AdminStudents() {
         setSaving(false); toast({ variant: 'destructive', title: 'Email and an 8-character password are required.' }); return;
       }
       try {
-        const created = await createUser.mutateAsync({ data: { email: form.email, password: form.password, fullName: form.fullName, role: 'student', phone: form.phone || null } });
-        const { error } = await supabase.from('students').insert({
-          profile_id: created.userId, admission_no: form.admissionNo, full_name: form.fullName,
-          father_name: form.fatherName || null, guardian_phone: form.phone || null, gender: form.gender,
-          class_id: form.classId, status: 'active',
-        });
-        if (error) throw error;
+        await customFetch('/api/admin/create-user', { method: 'POST', responseType: 'json', body: JSON.stringify({
+          email: form.email, password: form.password, fullName: form.fullName, role: 'student', phone: form.phone || null,
+          student: { admissionNo: form.admissionNo, fatherName: form.fatherName || null, gender: form.gender, classId: form.classId },
+        }) });
       } catch (error: any) {
         setSaving(false); toast({ variant: 'destructive', title: 'Student creation failed', description: error.message }); return;
       }
@@ -117,7 +113,7 @@ export function AdminStudents() {
         <Field label="Class *"><Picker value={form.classId} onChange={classId => setForm({ ...form, classId })} options={classes.map(item => ({ value: item.id, label: item.name }))} /></Field>
         <Field label="Gender"><Picker value={form.gender} onChange={gender => setForm({ ...form, gender })} options={[{value:'male',label:'Male'},{value:'female',label:'Female'},{value:'other',label:'Other'}]} /></Field>
         {editing && <Field label="Status"><Picker value={form.status} onChange={status => setForm({ ...form, status })} options={[{value:'active',label:'Active'},{value:'inactive',label:'Inactive'},{value:'graduated',label:'Graduated'}]} /></Field>}
-        <div className="sm:col-span-2 flex justify-end gap-2"><Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button><Button disabled={saving || createUser.isPending}>{saving ? 'Saving…' : 'Save Student'}</Button></div>
+        <div className="sm:col-span-2 flex justify-end gap-2"><Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button><Button disabled={saving}>{saving ? 'Saving…' : 'Save Student'}</Button></div>
       </form>
     </DialogContent></Dialog>
   </div>;

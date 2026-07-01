@@ -12,3 +12,8 @@ node_modules/
 supase.txt
 
 .vercel/
+
+# Private account credentials and one-time live database import data.
+# Keep these local: they contain real student/parent usernames and passwords.
+academy-static/credentials/
+artifacts/api-server/src/scripts/import-students-from-images.ts

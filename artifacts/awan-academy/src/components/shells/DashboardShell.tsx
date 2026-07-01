@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Users, BookOpen, UserCheck, 
   CreditCard, FileText, Award, Calendar,
   Image as ImageIcon, MessageSquare, Settings, LogOut,
-  Bell, Menu, X, BookMarked
+  Menu, X, BookMarked
 } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -29,6 +29,8 @@ const getNavigation = (role: string | undefined) => {
         { name: 'Parents', href: '/dashboard/admin/parents', icon: UserCheck },
         { name: 'Classes', href: '/dashboard/admin/classes', icon: BookMarked },
         { name: 'Subjects', href: '/dashboard/admin/subjects', icon: BookOpen },
+        { name: 'Batches', href: '/dashboard/admin/batches', icon: Users },
+        { name: 'Timetable', href: '/dashboard/admin/timetable', icon: Calendar },
         { name: 'Attendance', href: '/dashboard/admin/attendance', icon: Calendar },
         { name: 'Fees', href: '/dashboard/admin/fees', icon: CreditCard },
         { name: 'Exams', href: '/dashboard/admin/exams', icon: FileText },
@@ -139,11 +141,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="relative text-muted-foreground">
-              <Bell size={20} />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-destructive rounded-full" />
-            </Button>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">

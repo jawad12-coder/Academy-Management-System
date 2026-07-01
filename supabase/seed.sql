@@ -20,15 +20,8 @@ INSERT INTO classes (id, name, level, monthly_fee) VALUES
 ON CONFLICT DO NOTHING;
 
 -- ─── TEACHERS (public data only, no auth accounts) ─────────────────────────
-INSERT INTO teachers (id, full_name, subjects, status) VALUES
-  (gen_random_uuid(), 'Sir Junaid',   ARRAY['Mathematics','Computer Science','Urdu'],          'active'),
-  (gen_random_uuid(), 'Sir Shoaib',   ARRAY['Chemistry','Physics'],                            'active'),
-  (gen_random_uuid(), 'Sir Mudasir',  ARRAY['English'],                                        'active'),
-  (gen_random_uuid(), 'Miss Uzra',    ARRAY['Biology','English','General Science'],             'active'),
-  (gen_random_uuid(), 'Miss Shanzil', ARRAY['Islamiat','Tarjama tul Quran'],                   'active'),
-  (gen_random_uuid(), 'Miss Hijab',   ARRAY['General Mathematics'],                            'active'),
-  (gen_random_uuid(), 'Miss Komal',   ARRAY['Arts'],                                           'active')
-ON CONFLICT DO NOTHING;
+-- Teachers are created from the admin dashboard so each teacher has a linked
+-- Supabase Auth account, profile, email, and password.
 
 -- ─── SETTINGS ─────────────────────────────────────
 INSERT INTO settings (key, value) VALUES

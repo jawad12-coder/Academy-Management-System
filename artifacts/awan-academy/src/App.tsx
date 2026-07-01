@@ -39,6 +39,8 @@ import { AdminInquiries } from '@/pages/dashboard/admin/AdminInquiries';
 import { AdminGallery } from '@/pages/dashboard/admin/AdminGallery';
 import { AdminMessages } from '@/pages/dashboard/admin/AdminMessages';
 import { AdminSettings } from '@/pages/dashboard/admin/AdminSettings';
+import { AdminBatches } from '@/pages/dashboard/admin/AdminBatches';
+import { AdminTimetable } from '@/pages/dashboard/admin/AdminTimetable';
 
 import { TeacherOverview } from '@/pages/dashboard/teacher/TeacherOverview';
 import { TeacherAttendance } from '@/pages/dashboard/teacher/TeacherAttendance';
@@ -98,6 +100,8 @@ function Router() {
               <Route path="/dashboard/admin/parents" component={AdminParents} />
               <Route path="/dashboard/admin/classes" component={AdminClasses} />
               <Route path="/dashboard/admin/subjects" component={AdminSubjects} />
+              <Route path="/dashboard/admin/batches" component={AdminBatches} />
+              <Route path="/dashboard/admin/timetable" component={AdminTimetable} />
               <Route path="/dashboard/admin/attendance" component={AdminAttendance} />
               <Route path="/dashboard/admin/fees" component={AdminFees} />
               <Route path="/dashboard/admin/exams" component={AdminExams} />

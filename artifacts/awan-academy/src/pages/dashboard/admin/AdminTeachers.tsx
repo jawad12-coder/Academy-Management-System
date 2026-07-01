@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { Teacher } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
-import { useAdminCreateUser } from '@workspace/api-client-react';
+import { customFetch } from '@workspace/api-client-react';
 import { Button } from '@/components/ui/button';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -28,6 +28,8 @@ const teacherSchema = z.object({
   phone: z.string().optional(),
   qualification: z.string().optional(),
   subjects: z.string().min(2, "Enter subjects separated by commas"),
+  bio: z.string().optional(),
+  photoUrl: z.string().url('Enter a valid image URL').or(z.literal('')).optional(),
 });
 
 export function AdminTeachers() {
@@ -40,11 +42,12 @@ export function AdminTeachers() {
   const [assignments, setAssignments] = useState<Record<string, any[]>>({});
   const [assignment, setAssignment] = useState({ classId: '', subjectId: '' });
   const { toast } = useToast();
-  const createUser = useAdminCreateUser();
+  const [creating, setCreating] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof teacherSchema>>({
     resolver: zodResolver(teacherSchema),
-    defaultValues: { fullName: "", email: "", password: "", phone: "", qualification: "", subjects: "" },
+    defaultValues: { fullName: "", email: "", password: "", phone: "", qualification: "", subjects: "", bio: "", photoUrl: "" },
   });
 
   useEffect(() => {
@@ -87,44 +90,47 @@ export function AdminTeachers() {
     else await fetchTeachers();
   };
 
-  const onSubmit = (values: z.infer<typeof teacherSchema>) => {
-    // Create the auth user first
-    createUser.mutate({
-      data: {
+  const onSubmit = async (values: z.infer<typeof teacherSchema>) => {
+    setCreating(true);
+    try {
+      await customFetch('/api/admin/create-user', {
+        method: 'POST',
+        responseType: 'json',
+        body: JSON.stringify({
         email: values.email,
         password: values.password,
         fullName: values.fullName,
         role: 'teacher',
         phone: values.phone || null,
-      }
-    }, {
-      onSuccess: async (createdUser) => {
-        // Auth user and profile created. Now create the teacher record.
-        const subjectArray = values.subjects.split(',').map(s => s.trim()).filter(s => s);
-        
-        const { error } = await supabase.from('teachers').insert({
-          profile_id: createdUser.userId,
-          full_name: values.fullName,
-          email: values.email,
-          phone: values.phone || null,
           qualification: values.qualification || null,
-          subjects: subjectArray,
-          status: 'active'
-        });
+          subjects: values.subjects.split(',').map(s => s.trim()).filter(Boolean),
+          bio: values.bio || null,
+          photoUrl: values.photoUrl || null,
+        }),
+      });
+      toast({ title: 'Success', description: 'Teacher and login account created.' });
+      setIsDialogOpen(false);
+      form.reset();
+      await fetchTeachers();
+    } catch (error) {
+      toast({ variant: 'destructive', title: 'Could not create teacher', description: error instanceof Error ? error.message : 'Unknown error' });
+    } finally {
+      setCreating(false);
+    }
+  };
 
-        if (error) {
-          toast({ variant: 'destructive', title: 'Error creating teacher record', description: error.message });
-        } else {
-          toast({ title: 'Success', description: 'Teacher account created successfully.' });
-          setIsDialogOpen(false);
-          form.reset();
-          fetchTeachers();
-        }
-      },
-      onError: (error) => {
-        toast({ variant: 'destructive', title: 'Error creating user account', description: error.message });
-      }
-    });
+  const deleteTeacher = async (teacher: Teacher) => {
+    if (!window.confirm(`Delete ${teacher.full_name} and their login account permanently?`)) return;
+    setDeletingId(teacher.id);
+    try {
+      await customFetch(`/api/admin/teachers/${teacher.id}`, { method: 'DELETE', responseType: 'json' });
+      toast({ title: 'Teacher account deleted' });
+      await fetchTeachers();
+    } catch (error) {
+      toast({ variant: 'destructive', title: 'Could not delete teacher', description: error instanceof Error ? error.message : 'Unknown error' });
+    } finally {
+      setDeletingId(null);
+    }
   };
 
   return (
@@ -164,10 +170,16 @@ export function AdminTeachers() {
                 <FormField control={form.control} name="subjects" render={({ field }) => (
                   <FormItem><FormLabel>Subjects *</FormLabel><FormControl><Input placeholder="Comma separated, e.g. English, Urdu" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
+                <FormField control={form.control} name="photoUrl" render={({ field }) => (
+                  <FormItem><FormLabel>Photo URL</FormLabel><FormControl><Input type="url" placeholder="https://..." {...field} /></FormControl><FormMessage /></FormItem>
+                )} />
+                <FormField control={form.control} name="bio" render={({ field }) => (
+                  <FormItem><FormLabel>Public Bio</FormLabel><FormControl><Input placeholder="Short teacher introduction" {...field} /></FormControl><FormMessage /></FormItem>
+                )} />
                 
                 <div className="pt-4 flex justify-end">
-                  <Button type="submit" disabled={createUser.isPending}>
-                    {createUser.isPending ? "Creating..." : "Create Account"}
+                  <Button type="submit" disabled={creating}>
+                    {creating ? "Creating..." : "Create Account"}
                   </Button>
                 </div>
               </form>
@@ -209,7 +221,10 @@ export function AdminTeachers() {
                   <TableCell>
                     <Badge variant={teacher.status === 'active' ? 'default' : 'outline'}>{teacher.status}</Badge>
                   </TableCell>
-                  <TableCell className="text-right"><Button variant="outline" size="sm" onClick={() => setAssigning(teacher)}><Link2 className="h-4 w-4 mr-2" /> Assign</Button></TableCell>
+                  <TableCell className="text-right whitespace-nowrap">
+                    <Button variant="outline" size="sm" onClick={() => setAssigning(teacher)}><Link2 className="h-4 w-4 mr-2" /> Assign</Button>
+                    <Button variant="ghost" size="icon" className="ml-1" disabled={deletingId === teacher.id} onClick={() => void deleteTeacher(teacher)} aria-label={`Delete ${teacher.full_name}`}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                  </TableCell>
                 </TableRow>
               ))
             )}
