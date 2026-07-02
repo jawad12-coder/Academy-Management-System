@@ -45,11 +45,22 @@ const defaultTopTeachers = [
   { name: 'Sir Mudasir', subjects: 'English Literature', image: teacher3 },
 ];
 
+const localTeacherPhotos: Record<string, string> = {
+  'sir shoaib': teacher1,
+  'sir sohaib': teacher1,
+  'sir junaid': teacher2,
+  'sir mudasir': teacher3,
+};
+
 export function Home() {
   const [topTeachers, setTopTeachers] = useState(defaultTopTeachers);
   useEffect(() => {
     supabase.from('teachers').select('full_name,subjects,photo_url').eq('status', 'active').order('created_at').limit(3).then(({ data }) => {
-      setTopTeachers((data ?? []).map(teacher => ({ name: teacher.full_name, subjects: (teacher.subjects ?? []).join(', '), image: teacher.photo_url })) as typeof defaultTopTeachers);
+      setTopTeachers((data ?? []).map(teacher => ({
+        name: teacher.full_name,
+        subjects: (teacher.subjects ?? []).join(', '),
+        image: teacher.photo_url || localTeacherPhotos[teacher.full_name.trim().toLowerCase()] || '',
+      })) as typeof defaultTopTeachers);
     });
   }, []);
   return (
