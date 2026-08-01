@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/rekhta-academy"
+title = "Rekhta Academy Pakistan"
+version = "1.0.0"
+id = "artifacts/awan-academy"
+router = "path"
+
+[[services]]
+name = "web"
+paths = ["/rekhta-academy"]
+localPort = 25573
+
+[services.development]
+run = "pnpm --filter @workspace/rekhta-academy run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rekhta-academy", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/rekhta-academy/dist"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25573"
+BASE_PATH = "/rekhta-academy"

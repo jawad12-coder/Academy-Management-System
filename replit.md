@@ -1,13 +1,15 @@
-# The Awan Academy
+# Rekhta Academy Pakistan
 
-A complete, professional academy website and management portal for The Awan Academy — a Pakistani educational institution serving 130+ students from Class 1–12, with 7 expert teachers. Built with React + Vite + Supabase.
+A complete academy website and learning management portal for Rekhta Academy Pakistan — a connected learning community serving students from primary to higher secondary levels. Built with React + Vite + Supabase.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/awan-academy run dev` — run the frontend (public website + dashboards)
+- `pnpm --filter @workspace/rekhta-academy run dev` — run the frontend (public website + dashboards)
 - `pnpm --filter @workspace/api-server run dev` — run the API server (admin user creation, dashboard stats)
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks from OpenAPI spec
 - `pnpm run typecheck` — full typecheck across all packages
+- `node scripts/import-facebook-archive.mjs` — upload Facebook archive photos to the `rekhta-facebook-archive` storage bucket
+- `node scripts/seed-gallery-from-facebook.mjs` — make that bucket public and sync its photos into the `gallery` table (re-runnable; clears bucket rows first)
 
 ## Supabase Setup (required before first use)
 
@@ -34,7 +36,7 @@ A complete, professional academy website and management portal for The Awan Acad
 
 ## Where things live
 
-- `artifacts/awan-academy/src/` — React frontend
+- `artifacts/rekhta-academy/src/` — React frontend
   - `pages/` — all public and dashboard pages
   - `components/` — shared UI components
   - `context/AuthContext.tsx` — auth state + role routing
@@ -48,12 +50,13 @@ A complete, professional academy website and management portal for The Awan Acad
 
 ## Academy Details
 
-- Name: The Awan Academy
-- Email: awansacademy@gmail.com
-- Phone/WhatsApp: +92 333 1962657
-- Timings: 4:00 PM to 7:30 PM (Pakistan Standard Time)
+- Name: Rekhta Academy Pakistan
+- Email: rekhtaacademypakistan@gmail.com
+- Phone/WhatsApp: +92 304 3333418
+- Timings: Open 24 hours
+- Address: 2 6th Road, Block F, New Katarian Satellite Town, Rawalpindi, 46000, Pakistan
 - Classes: 1–12, FSC, ICS
-- Teachers: 7 (Sir Junaid, Sir Shoaib, Sir Mudasir, Miss Uzra, Miss Shanzil, Miss Hijab, Miss Komal)
+- Tagline: We Will Shine Together
 
 ## Roles
 
@@ -66,7 +69,7 @@ A complete, professional academy website and management portal for The Awan Acad
 
 - Use Supabase client directly for all data operations (no Drizzle ORM)
 - No separate Express server for data — only for admin operations requiring service role key
-- Plain email format (not markdown mailto links): awansacademy@gmail.com
+- Plain email format (not markdown mailto links): rekhtaacademypakistan@gmail.com
 - Students must NEVER see fee records (enforced at RLS level)
 
 ## Gotchas

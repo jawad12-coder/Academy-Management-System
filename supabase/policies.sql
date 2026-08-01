@@ -1,5 +1,5 @@
 -- ============================================================
--- THE AWAN ACADEMY — ROW LEVEL SECURITY POLICIES
+-- REKHTA ACADEMY PAKISTAN — ROW LEVEL SECURITY POLICIES
 -- Run AFTER schema.sql in your Supabase SQL Editor
 -- ============================================================
 

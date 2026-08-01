@@ -1,5 +1,5 @@
 -- ============================================================
--- THE AWAN ACADEMY — SUPABASE SCHEMA
+-- REKHTA ACADEMY PAKISTAN — SUPABASE SCHEMA
 -- Run this in your Supabase SQL Editor
 -- ============================================================
 

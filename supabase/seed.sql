@@ -1,5 +1,5 @@
 -- ============================================================
--- THE AWAN ACADEMY — SEED DATA
+-- REKHTA ACADEMY PAKISTAN — SEED DATA
 -- Run AFTER schema.sql and policies.sql
 -- ============================================================
 
@@ -25,13 +25,15 @@ ON CONFLICT DO NOTHING;
 
 -- ─── SETTINGS ─────────────────────────────────────
 INSERT INTO settings (key, value) VALUES
-  ('academy_name',     '"The Awan Academy"'),
-  ('phone',            '"+92 333 1962657"'),
-  ('email',            '"awansacademy@gmail.com"'),
-  ('timings',          '"4:00 PM to 7:30 PM (Pakistan Standard Time)"'),
-  ('instagram',        '"The Awan Academy"'),
-  ('tiktok',           '"The Awan Academy"'),
-  ('youtube',          '"The Awan Academy"'),
+  ('academy_name',     '"Rekhta Academy Pakistan"'),
+  ('phone',            '"+92 304 3333418"'),
+  ('email',            '"rekhtaacademypakistan@gmail.com"'),
+  ('timings',          '"Open 24 hours"'),
+  ('address',          '"2 6th Road, Block F, New Katarian Satellite Town, Rawalpindi, 46000, Pakistan"'),
+  ('tagline',          '"We Will Shine Together"'),
+  ('instagram',        '""'),
+  ('tiktok',           '""'),
+  ('youtube',          '""'),
   ('total_students',   '130'),
   ('total_teachers',   '7'),
   ('admission_open',   'true'),
@@ -40,7 +42,7 @@ ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now();
 
 -- ─── RESULT HIGHLIGHTS ─────────────────────────────────────
 INSERT INTO result_highlights (title, description, year, category, is_public) VALUES
-  ('SSC-II 2025 — 100% Result', 'The Awan Academy achieved 100% result in SSC-II 2025. Top scorer: Taha Bin Tanveer with 512 marks.', 2025, 'SSC-II', true),
+  ('SSC-II 2025 — 100% Result', 'Rekhta Academy Pakistan achieved 100% result in SSC-II 2025. Top scorer: Taha Bin Tanveer with 512 marks.', 2025, 'SSC-II', true),
   ('Top Scorer — Taha Bin Tanveer',  '512 marks in SSC-II Separate 2025', 2025, 'SSC-II', true),
   ('Hassan Asghar — 501 marks',      'Outstanding performance in SSC-II 2025', 2025, 'SSC-II', true),
   ('Muqaddas Qureshi — 500 marks',   'Brilliant result in SSC-II 2025', 2025, 'SSC-II', true)

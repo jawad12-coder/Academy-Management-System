@@ -17,3 +17,8 @@ supase.txt
 # Keep these local: they contain real student/parent usernames and passwords.
 academy-static/credentials/
 artifacts/api-server/src/scripts/import-students-from-images.ts
+
+# One-off local tool logs (Facebook import, dev server, package installs).
+*.log
+*.log.err
+*.log.error
