@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Target, Eye, Shield, CheckCircle } from 'lucide-react';
-import ceoImage from '@assets/CEO_1782659916168.jpeg';
-import facultyImage from '@assets/pictures2_1782659947704.jpeg';
-import aboutImage from '@assets/students_learninig_1782659969968.jpeg';
+import academyLogo from '@assets/rekhta-academy-logo.png';
+import aboutImage from '@assets/imgi_12_743270105_1057276370576275_1586185514718888209_n.jpg';
+import facultyImage from '@assets/imgi_13_742215737_1057276027242976_8132766877549451837_n.jpg';
 
 export function About() {
   return (
@@ -157,7 +157,7 @@ export function About() {
             <div className="flex flex-col md:flex-row gap-12 items-center">
               <div className="w-48 h-48 md:w-64 md:h-64 shrink-0 relative">
                 <div className="absolute inset-0 border-2 border-accent rounded-full translate-x-2 translate-y-2"></div>
-                <img src={ceoImage} alt="CEO" className="w-full h-full object-cover rounded-full relative z-10" />
+                <img src={academyLogo} alt="Rekhta Academy Pakistan logo" className="w-full h-full object-cover rounded-full relative z-10" />
               </div>
               <div>
                 <svg className="w-12 h-12 text-accent mb-6 opacity-50" fill="currentColor" viewBox="0 0 32 32">
@@ -167,7 +167,7 @@ export function About() {
                    "Education is the most powerful weapon which you can use to change the world. At Rekhta Academy, we pair academic discipline with care because every learner deserves the opportunity to shine."
                 </p>
                 <div>
-                  <h4 className="text-2xl font-bold text-white mb-1">Director & CEO</h4>
+                  <h4 className="text-2xl font-bold text-white mb-1">Rekhta Academy Pakistan</h4>
                    <p className="text-accent font-medium uppercase tracking-wider text-sm">Rekhta Academy Pakistan</p>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export function About() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-foreground">Our Core Team</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-foreground">Our Learning Community</h2>
             <div className="w-24 h-1 bg-accent mx-auto mb-6"></div>
             <p className="text-muted-foreground">Behind every successful student is a team of dedicated educators who go above and beyond.</p>
           </div>

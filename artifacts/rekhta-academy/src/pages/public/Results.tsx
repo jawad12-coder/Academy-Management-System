@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Award, Star, Quote } from 'lucide-react';
-import sscPoster1 from '@assets/SSC_2_results_2025_1782659969967.jpeg';
-import sscPoster2 from '@assets/SSC_2_results_2025_part2_1782659969969.jpeg';
-import inspiringPeople from '@assets/inspring_peoples_1782659947705.jpeg';
+import resultNotice from '@assets/imgi_14_741888927_1057274823909763_5534522301486439464_n.jpg';
+import academyInfoImage from '@assets/imgi_15_733621471_1047472514889994_1172386309068307758_n.jpg';
+import inspiringPeople from '@assets/imgi_12_743270105_1057276370576275_1586185514718888209_n.jpg';
 
 export function Results() {
   return (
@@ -99,10 +99,10 @@ export function Results() {
       {/* Official Posters */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-serif font-bold text-foreground mb-12">Official Result Posters</h2>
+          <h2 className="text-3xl font-serif font-bold text-foreground mb-12">Academy Notices</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <img src={sscPoster1} alt="SSC Results 2025 Part 1" className="w-full rounded-lg shadow-2xl border-4 border-muted" />
-            <img src={sscPoster2} alt="SSC Results 2025 Part 2" className="w-full rounded-lg shadow-2xl border-4 border-muted" />
+            <img src={resultNotice} alt="Rekhta Academy results notice" className="w-full rounded-lg shadow-2xl border-4 border-muted" />
+            <img src={academyInfoImage} alt="Rekhta Academy information" className="w-full rounded-lg shadow-2xl border-4 border-muted" />
           </div>
         </div>
       </section>

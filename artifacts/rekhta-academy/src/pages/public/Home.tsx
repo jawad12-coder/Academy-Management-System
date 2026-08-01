@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 import { Users, BookOpen, Award, ChevronRight } from 'lucide-react';
-import heroBg from '@assets/pictures_1782659947703.jpeg';
-import classPhoto from '@assets/students_learninig_1782659969968.jpeg';
-import teacher1 from '@assets/sir_sohaib_1782659947704.jpeg';
-import teacher2 from '@assets/Sir junaid.jpeg';
-import teacher3 from '@assets/Sir2_1782659969969.jpeg';
+import heroBg from '@assets/imgi_12_743270105_1057276370576275_1586185514718888209_n.jpg';
+import classPhoto from '@assets/imgi_13_742215737_1057276027242976_8132766877549451837_n.jpg';
+import academyLogo from '@assets/rekhta-academy-logo.png';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { resolveTeacherPhoto } from '@/lib/utils';
 
 const stats = [
   { value: '130+', label: 'Students Enrolled' },
@@ -40,16 +39,16 @@ const courseLevels = [
 ];
 
 const defaultTopTeachers = [
-  { name: 'Sir Sohaib', subjects: 'Chemistry & Physics', image: teacher1 },
-  { name: 'Sir Junaid', subjects: 'Mathematics, CS & Urdu', image: teacher2 },
-  { name: 'Sir Mudasir', subjects: 'English Literature', image: teacher3 },
+  { name: 'Rekhta Faculty', subjects: 'All subjects, Classes 1–12', image: academyLogo },
+  { name: 'Experienced Teachers', subjects: 'Primary to Higher Secondary', image: academyLogo },
+  { name: 'Student Support Team', subjects: 'Focused academic guidance', image: academyLogo },
 ];
 
 const localTeacherPhotos: Record<string, string> = {
-  'sir shoaib': teacher1,
-  'sir sohaib': teacher1,
-  'sir junaid': teacher2,
-  'sir mudasir': teacher3,
+  'sir shoaib': academyLogo,
+  'sir sohaib': academyLogo,
+  'sir junaid': academyLogo,
+  'sir mudasir': academyLogo,
 };
 
 export function Home() {
@@ -59,7 +58,7 @@ export function Home() {
       setTopTeachers((data ?? []).map(teacher => ({
         name: teacher.full_name,
         subjects: (teacher.subjects ?? []).join(', '),
-        image: teacher.photo_url || localTeacherPhotos[teacher.full_name.trim().toLowerCase()] || '',
+        image: resolveTeacherPhoto(teacher.full_name, teacher.photo_url, localTeacherPhotos),
       })) as typeof defaultTopTeachers);
     });
   }, []);
@@ -96,7 +95,7 @@ export function Home() {
             </h1>
             
             <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl leading-relaxed font-medium drop-shadow-md">
-              A premium educational institution dedicated to excellence in academics and character building for students from Class 1 to FSc/ICS.
+              Rekhta Academy Pakistan supports students from Class 1 to 12, including FSc and ICS, with focused academic guidance.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
@@ -160,8 +159,8 @@ export function Home() {
                 className="rounded-lg shadow-xl w-full object-cover aspect-[4/3] border-4 border-white"
               />
               <div className="absolute -bottom-6 -left-6 bg-primary text-white p-6 rounded-lg shadow-xl border-l-4 border-accent max-w-[200px]">
-                <p className="font-serif font-bold text-xl mb-1">Years of</p>
-                <p className="text-sm text-accent">Academic Excellence</p>
+                <p className="font-serif font-bold text-xl mb-1">130+ Students</p>
+                <p className="text-sm text-accent">Learning and growing together</p>
               </div>
             </motion.div>
             

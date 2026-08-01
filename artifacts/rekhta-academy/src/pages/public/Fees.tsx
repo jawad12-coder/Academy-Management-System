@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
-import feeStructureImage from '@assets/fees_structure_1782659916167.jpeg';
+import academyInfoImage from '@assets/imgi_15_733621471_1047472514889994_1172386309068307758_n.jpg';
 
 export function Fees() {
   return (
@@ -31,7 +31,7 @@ export function Fees() {
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-12 flex items-start gap-4">
             <AlertCircle className="text-blue-500 shrink-0 mt-0.5" />
             <p className="text-sm text-blue-800 dark:text-blue-200 font-medium">
-              Note: The fee structure below is standard. Exact final fee confirmation, sibling discounts, or concessions are determined at the academy office during admission.
+              Fees, discounts, and concessions are confirmed by the academy at admission. Contact us on WhatsApp or visit campus for the latest details.
             </p>
           </div>
 
@@ -83,12 +83,12 @@ export function Fees() {
             </div>
           </motion.div>
 
-          {/* Official Poster Image */}
+          {/* Academy information */}
           <div className="mt-16 text-center">
-            <h3 className="text-2xl font-serif font-bold text-foreground mb-8">Official Fee Structure Poster</h3>
+            <h3 className="text-2xl font-serif font-bold text-foreground mb-8">Academy Information</h3>
             <img 
-              src={feeStructureImage} 
-              alt="Rekhta Academy fee structure" 
+              src={academyInfoImage} 
+              alt="Rekhta Academy admissions information" 
               className="w-full max-w-2xl mx-auto rounded-lg shadow-2xl border-4 border-muted"
             />
           </div>
