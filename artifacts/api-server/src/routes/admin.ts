@@ -97,7 +97,7 @@ router.post('/create-user', requireAuth, requireRole('owner', 'admin'), async (r
       profile_id: userId, admission_no: student.admissionNo, full_name: fullName,
       father_name: student.fatherName ?? null, guardian_phone: phone ?? null,
       gender: student.gender ?? null, class_id: student.classId,
-      batch_id: student.batchId ?? null, status: 'active',
+      batch_id: student.batchId ?? null, profile_image_url: student.profileImageUrl ?? null, status: 'active',
     });
     if (studentError) {
       await supabaseAdmin.from('profiles').delete().eq('id', userId);

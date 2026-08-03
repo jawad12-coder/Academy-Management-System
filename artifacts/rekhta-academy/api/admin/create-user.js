@@ -60,7 +60,7 @@ export default async function handler(req, res) {
       profile_id: userId, admission_no: admissionNo, full_name: fullName, class_id: classId,
       father_name: typeof student.fatherName === 'string' ? student.fatherName || null : null,
       gender: typeof student.gender === 'string' ? student.gender : null,
-      guardian_phone: phone, status: 'active',
+      guardian_phone: phone, profile_image_url: typeof student.profileImageUrl === 'string' ? student.profileImageUrl || null : null, status: 'active',
     });
     if (error) { await removeProfileAndUser(); return fail(res, 400, error.message); }
   }

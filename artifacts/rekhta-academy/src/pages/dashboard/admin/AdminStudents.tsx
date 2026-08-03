@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase';
 import type { Class, Student } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { customFetch } from '@workspace/api-client-react';
+import { uploadProfileImage } from '@/lib/image-upload';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,6 +28,7 @@ export function AdminStudents() {
   const [editing, setEditing] = useState<Student | null>(null);
   const [form, setForm] = useState<StudentForm>(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const { toast } = useToast();
 
   async function load() {
@@ -42,9 +44,10 @@ export function AdminStudents() {
   }
   useEffect(() => { void load(); }, []);
 
-  function openCreate() { setEditing(null); setForm(emptyForm); setDialogOpen(true); }
+  function openCreate() { setEditing(null); setPhotoFile(null); setForm(emptyForm); setDialogOpen(true); }
   function openEdit(student: Student) {
     setEditing(student);
+    setPhotoFile(null);
     setForm({
       fullName: student.full_name, email: '', password: '', admissionNo: student.admission_no,
       fatherName: student.father_name ?? '', phone: student.guardian_phone ?? '', gender: student.gender ?? 'male',
@@ -60,9 +63,17 @@ export function AdminStudents() {
     }
     setSaving(true);
     if (editing) {
+      let profileImageUrl = editing.profile_image_url;
+      try {
+        if (photoFile) profileImageUrl = await uploadProfileImage(photoFile, 'students');
+      } catch (error) {
+        setSaving(false);
+        toast({ variant: 'destructive', title: 'Photo upload failed', description: error instanceof Error ? error.message : 'Could not upload the image.' });
+        return;
+      }
       const { error } = await supabase.from('students').update({
         full_name: form.fullName, admission_no: form.admissionNo, father_name: form.fatherName || null,
-        guardian_phone: form.phone || null, gender: form.gender, class_id: form.classId, status: form.status,
+        guardian_phone: form.phone || null, gender: form.gender, class_id: form.classId, profile_image_url: profileImageUrl, status: form.status,
       }).eq('id', editing.id);
       if (!error && editing.profile_id) await supabase.from('profiles').update({ full_name: form.fullName, status: form.status === 'active' ? 'active' : 'inactive' }).eq('id', editing.profile_id);
       setSaving(false);
@@ -72,9 +83,10 @@ export function AdminStudents() {
         setSaving(false); toast({ variant: 'destructive', title: 'Email and an 8-character password are required.' }); return;
       }
       try {
+        const profileImageUrl = photoFile ? await uploadProfileImage(photoFile, 'students') : null;
         await customFetch('/api/admin/create-user', { method: 'POST', responseType: 'json', body: JSON.stringify({
           email: form.email, password: form.password, fullName: form.fullName, role: 'student', phone: form.phone || null,
-          student: { admissionNo: form.admissionNo, fatherName: form.fatherName || null, gender: form.gender, classId: form.classId },
+          student: { admissionNo: form.admissionNo, fatherName: form.fatherName || null, gender: form.gender, classId: form.classId, profileImageUrl },
         }) });
       } catch (error: any) {
         setSaving(false); toast({ variant: 'destructive', title: 'Student creation failed', description: error.message }); return;
@@ -112,6 +124,7 @@ export function AdminStudents() {
         <Field label="Father / guardian"><Input value={form.fatherName} onChange={e => setForm({ ...form, fatherName: e.target.value })} /></Field><Field label="Guardian phone"><Input value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} /></Field>
         <Field label="Class *"><Picker value={form.classId} onChange={classId => setForm({ ...form, classId })} options={classes.map(item => ({ value: item.id, label: item.name }))} /></Field>
         <Field label="Gender"><Picker value={form.gender} onChange={gender => setForm({ ...form, gender })} options={[{value:'male',label:'Male'},{value:'female',label:'Female'},{value:'other',label:'Other'}]} /></Field>
+        <Field label="Profile photo"><Input type="file" accept="image/*" onChange={event => setPhotoFile(event.target.files?.[0] ?? null)} /><p className="text-xs text-muted-foreground">Choose a photo from this device (maximum 4 MB).</p></Field>
         {editing && <Field label="Status"><Picker value={form.status} onChange={status => setForm({ ...form, status })} options={[{value:'active',label:'Active'},{value:'inactive',label:'Inactive'},{value:'graduated',label:'Graduated'}]} /></Field>}
         <div className="sm:col-span-2 flex justify-end gap-2"><Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancel</Button><Button disabled={saving}>{saving ? 'Saving…' : 'Save Student'}</Button></div>
       </form>

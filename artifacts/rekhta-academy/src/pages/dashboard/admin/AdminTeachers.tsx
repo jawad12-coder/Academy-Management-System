@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase';
 import type { Teacher } from '@/lib/supabase';
 import { useToast } from '@/hooks/use-toast';
 import { customFetch } from '@workspace/api-client-react';
+import { uploadProfileImage } from '@/lib/image-upload';
 import { Button } from '@/components/ui/button';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -29,7 +30,6 @@ const teacherSchema = z.object({
   qualification: z.string().optional(),
   subjects: z.string().min(2, "Enter subjects separated by commas"),
   bio: z.string().optional(),
-  photoUrl: z.string().url('Enter a valid image URL').or(z.literal('')).optional(),
 });
 
 export function AdminTeachers() {
@@ -44,10 +44,11 @@ export function AdminTeachers() {
   const { toast } = useToast();
   const [creating, setCreating] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
 
   const form = useForm<z.infer<typeof teacherSchema>>({
     resolver: zodResolver(teacherSchema),
-    defaultValues: { fullName: "", email: "", password: "", phone: "", qualification: "", subjects: "", bio: "", photoUrl: "" },
+    defaultValues: { fullName: "", email: "", password: "", phone: "", qualification: "", subjects: "", bio: "" },
   });
 
   useEffect(() => {
@@ -93,6 +94,7 @@ export function AdminTeachers() {
   const onSubmit = async (values: z.infer<typeof teacherSchema>) => {
     setCreating(true);
     try {
+      const photoUrl = photoFile ? await uploadProfileImage(photoFile, 'teachers') : null;
       await customFetch('/api/admin/create-user', {
         method: 'POST',
         responseType: 'json',
@@ -105,12 +107,13 @@ export function AdminTeachers() {
           qualification: values.qualification || null,
           subjects: values.subjects.split(',').map(s => s.trim()).filter(Boolean),
           bio: values.bio || null,
-          photoUrl: values.photoUrl || null,
+          photoUrl,
         }),
       });
       toast({ title: 'Success', description: 'Teacher and login account created.' });
       setIsDialogOpen(false);
       form.reset();
+      setPhotoFile(null);
       await fetchTeachers();
     } catch (error) {
       toast({ variant: 'destructive', title: 'Could not create teacher', description: error instanceof Error ? error.message : 'Unknown error' });
@@ -170,9 +173,7 @@ export function AdminTeachers() {
                 <FormField control={form.control} name="subjects" render={({ field }) => (
                   <FormItem><FormLabel>Subjects *</FormLabel><FormControl><Input placeholder="Comma separated, e.g. English, Urdu" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
-                <FormField control={form.control} name="photoUrl" render={({ field }) => (
-                  <FormItem><FormLabel>Photo URL</FormLabel><FormControl><Input type="url" placeholder="https://..." {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
+                <FormItem><FormLabel>Profile photo</FormLabel><FormControl><Input type="file" accept="image/*" onChange={event => setPhotoFile(event.target.files?.[0] ?? null)} /></FormControl><p className="text-xs text-muted-foreground">Choose a photo from this device (maximum 4 MB).</p></FormItem>
                 <FormField control={form.control} name="bio" render={({ field }) => (
                   <FormItem><FormLabel>Public Bio</FormLabel><FormControl><Input placeholder="Short teacher introduction" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
