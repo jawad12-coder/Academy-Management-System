@@ -26,9 +26,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // In production, VITE_API_URL points to the deployed Express server
-    // In dev it is '' and Vite proxy handles /api/*.
-    const apiUrl = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
+    // A localhost API URL is valid only during local development. If it is
+    // accidentally baked into a production Vercel build, browser requests go
+    // to each visitor's own machine and fail with "Failed to fetch". Fall
+    // back to this site's serverless /api routes in that case.
+    const configuredApiUrl = (import.meta.env.VITE_API_URL as string | undefined) ?? '';
+    const apiUrl = /https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?(?:\/|$)/i.test(configuredApiUrl)
+      ? ''
+      : configuredApiUrl;
     setBaseUrl(apiUrl);
 
     // Public pages must stay usable when the local preview does not have
