@@ -43,9 +43,12 @@ export default async function handler(req, res) {
   const removeUser = async () => { await admin.auth.admin.deleteUser(userId); };
   const removeProfileAndUser = async () => { await admin.from('profiles').delete().eq('id', userId); await removeUser(); };
 
-  const { error: profileError } = await admin.from('profiles').insert({
+  // This Supabase project creates a profile row automatically when an Auth
+  // user is created. Upsert supplies the intended role and details whether
+  // that trigger has already inserted the row or not.
+  const { error: profileError } = await admin.from('profiles').upsert({
     id: userId, email, full_name: fullName, role, phone, status: 'active',
-  });
+  }, { onConflict: 'id' });
   if (profileError) { await removeUser(); return fail(res, 400, profileError.message); }
 
   if (role === 'student') {

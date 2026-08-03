@@ -40,14 +40,16 @@ router.post('/create-user', requireAuth, requireRole('owner', 'admin'), async (r
   const userId = authData.user.id;
 
   // Create profile row
-  const { error: profileError } = await supabaseAdmin.from('profiles').insert({
+  // An Auth trigger may already have created this profile. Upsert keeps the
+  // API compatible with both triggered and non-triggered Supabase projects.
+  const { error: profileError } = await supabaseAdmin.from('profiles').upsert({
     id: userId,
     email,
     full_name: fullName,
     role,
     phone: phone ?? null,
     status: 'active',
-  });
+  }, { onConflict: 'id' });
 
   if (profileError) {
     // Clean up the auth user if profile insert fails
