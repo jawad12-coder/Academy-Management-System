@@ -35,7 +35,11 @@ function resolveEnvVar(key: string): string | undefined {
   return raw;
 }
 
-const supabaseUrl = resolveEnvVar('SUPABASE_URL');
+// Local Vite deployments commonly expose the project URL as
+// VITE_SUPABASE_URL. The URL itself is public, so accepting it here keeps the
+// API server compatible with that environment while the service-role key
+// remains server-only.
+const supabaseUrl = resolveEnvVar('SUPABASE_URL') ?? resolveEnvVar('VITE_SUPABASE_URL');
 const supabaseServiceRoleKey = resolveEnvVar('SUPABASE_SERVICE_ROLE_KEY');
 
 if (!supabaseUrl || !supabaseServiceRoleKey) {
